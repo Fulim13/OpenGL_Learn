@@ -21,8 +21,10 @@
 ![](img/11_Problem_Using_Unicode_String.png)
 
 ### 7. Update Properties (Use Multi-Byte Stirng)
+Go to Project properties -> Configuration Properties -> Advanced->Character Set, choose Use Multi-Byte Character Set.
 ![](img/08_ProjectProperties.png)
 ![](img/09_UpdateCharacterSet.png)
 
 ### 8. Update Properties (Select Not Set to Allow Both Console and Window Program)
+Go to Project properties -> Configuration Properties -> Linker -> System -> SubSystem, choose "Windows (/SUBSYSTEM:WINDOWS)" and not Console.
 ![](img/10_UpdateSubSystemToAllowBothWindowAndConsole.png)
