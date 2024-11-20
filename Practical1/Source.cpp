@@ -67,26 +67,21 @@ bool initPixelFormat(HDC hdc)
 
 void display()
 {
-	//--------------------------------
-	//	OpenGL drawing
-	//--------------------------------
-	glClearColor(r, 0.0f, 0.0f, 0.0f);
-	glClear(GL_COLOR_BUFFER_BIT);
+	glClearColor(r, 0.0f, 0.0f, 0.0f); //clear the color of the screen to red
+	glClear(GL_COLOR_BUFFER_BIT); //Clear the color buffer
+	
+	//glPointSize(10.0f);	//Set point size
 
-	glLineWidth(5.0f);
+	glLineWidth(5.0f);		//Set line width
 
-	glBegin(GL_TRIANGLES);
-	// define vertices position for triangle
-	glColor3f(1, 0, 0); // RED
-	glVertex2f(-.5, 0);
-	glColor3f(0, 1, 0); //GREEN
-	glVertex2f(0, .5);
-	glColor3f(0, 0, 1); //Blue
-	glVertex2f(.5, 0);
+	glBegin(GL_POLYGON);	//Begin to draw line
+	glColor3f(1, 0, 0);		// RED
+	glVertex2f(-.5, 0);		// P1
+	glColor3f(0, 1, 0);		//GREEN
+	glVertex2f(0, .5);		//P2
+	glColor3f(0, 0, 1);		//Blue
+	glVertex2f(.5, 0);		//P3
 	glEnd();
-	//--------------------------------
-	//	End of OpenGL drawing
-	//--------------------------------
 }
 //--------------------------------------------------------------------
 
