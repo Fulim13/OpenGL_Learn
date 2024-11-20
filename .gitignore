@@ -1,0 +1,72 @@
+# General Visual Studio ignores
+.vs/
+*.vcxproj.user
+*.vcxproj.filters
+*.suo
+*.user
+*.rsuser
+*.sdf
+*.ipch
+*.opensdf
+*.ncb
+*.obj
+*.tlog
+*.log
+*.idb
+*.pdb
+*.opendb
+*.db
+*.ilk
+
+# Build artifacts
+build/
+out/
+*.exe
+*.dll
+*.lib
+*.app
+*.so
+*.dylib
+*.out
+*.exp
+*.log
+
+# C++ specific files
+*.o
+*.obj
+*.gch
+*.pch
+*.a
+*.lo
+*.la
+
+# OpenGL generated files
+cmake-build-debug/
+cmake-build-release/
+*.glsl.cache
+*.shadercache
+
+# CMake
+CMakeLists.txt.user
+CMakeCache.txt
+CMakeFiles/
+cmake_install.cmake
+Makefile
+
+# IDE Specific
+.idea/
+*.iml
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Miscellaneous
+*.bak
+*.tmp
+*.temp
+*.log
+*.swp
+*.class
+*.pyc
