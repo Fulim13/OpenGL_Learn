@@ -28,3 +28,12 @@ Go to Project properties -> Configuration Properties -> Advanced->Character Set,
 ### 8. Update Properties (Select Not Set to Allow Both Console and Window Program)
 Go to Project properties -> Configuration Properties -> Linker -> System -> SubSystem, choose "Windows (/SUBSYSTEM:WINDOWS)" and not Console.
 ![](img/10_UpdateSubSystemToAllowBothWindowAndConsole.png)
+
+### 9. Result
+![](img/11_VertexConcept.jpg)
+![](img/12_VertexConcept2.png)
+![](img/13_Result.png)
+
+Press Up Key
+
+![](img/14_ResultPressUpKey.png)
