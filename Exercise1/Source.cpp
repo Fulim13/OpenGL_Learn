@@ -81,13 +81,13 @@ bool initPixelFormat(HDC hdc)
 //--------------------------------------------------------------------
 
 void drawOutline() {
-	glLineWidth(5.0);					//Set line width to 5
+	glLineWidth(2.0);					//Set line width to 5
 	glBegin(GL_LINE_LOOP);				//Begin to draw outline
 		glColor3f(0.0f, 0.0f, 1.0f);	//Set color to blue
-		glVertex2d(-0.5, -0.5);			//P1
-		glVertex2d(-0.5, 0.5);			//P2
-		glVertex2d(0.5, 0.5);			//P3
-		glVertex2d(0.5, -0.5); 			//P4	
+		glVertex2d(-0.7, -0.4);			//P1
+		glVertex2d(-0.7, 0.4);			//P2
+		glVertex2d(0.7, 0.4);			//P3
+		glVertex2d(0.7, -0.4); 			//P4	
 	glEnd();
 }
 
@@ -97,18 +97,16 @@ void pahangFlag() {
 
 	glBegin(GL_QUADS);					//Begin to draw quads
 		glColor3f(1.0f, 1.0f, 1.0f);	//Set color to white
-		glVertex2d(-0.5, 0.0);			//P1
-		glVertex2d(-0.5, 0.5);			//P2
-		glVertex2d(0.5, 0.5);			//P3
-		glVertex2d(0.5, 0.0); 			//P4	
-	glEnd();
+		glVertex2d(-0.7, 0.0);			//P1
+		glVertex2d(-0.7, 0.4);			//P2
+		glVertex2d(0.7, 0.4);			//P3
+		glVertex2d(0.7, 0.0); 			//P4	
 
-	glBegin(GL_QUADS);					//Begin to draw quads
 		glColor3f(0.0f, 0.0f, 0.0f);	//Set color to black
-		glVertex2d(-0.5, -0.5);			//P1
-		glVertex2d(-0.5, 0.0);			//P2
-		glVertex2d(0.5, 0.0);			//P3
-		glVertex2d(0.5, -0.5); 			//P4	
+		glVertex2d(-0.7, -0.7);			//P1
+		glVertex2d(-0.7, 0.0);			//P2
+		glVertex2d(0.7, 0.0);			//P3
+		glVertex2d(0.7, -0.4); 			//P4	
 	glEnd();
 
 	drawOutline();
@@ -120,23 +118,21 @@ void n9Flag() {
 
 	glBegin(GL_QUADS);					//Begin to draw quads
 		glColor3f(1.0f, 1.0f, 0.0f);	//Set color to yellow
-		glVertex2d(-0.5, -0.5);			//P1
-		glVertex2d(-0.5, 0.5);			//P2
-		glVertex2d(0.5, 0.5);			//P3
-		glVertex2d(0.5, -0.5); 			//P4
-	glEnd();
-
-	glBegin(GL_TRIANGLES);				//Begin to draw triangles
-		glColor3f(0.0f, 0.0f, 0.0f);	//Set color to black
-		glVertex2d(-0.5, 0.0);			//P1
-		glVertex2d(-0.5, 0.5);			//P2
-		glVertex2d(0.0, 0.0);			//P3
+		glVertex2d(-0.7, -0.4);			//P1
+		glVertex2d(-0.7, 0.4);			//P2
+		glVertex2d(0.7, 0.4);			//P3
+		glVertex2d(0.7, -0.4); 			//P4
 	glEnd();
 
 	glBegin(GL_TRIANGLES);				//Begin to draw triangles
 		glColor3f(1.0f, 0.0f, 0.0f);	//Set color to red
-		glVertex2d(-0.5, 0.5);			//P1
-		glVertex2d(0.0, 0.5);			//P2
+		glVertex2d(-0.7, 0.0);			//P1
+		glVertex2d(-0.7, 0.4);			//P2
+		glVertex2d(0.0, 0.4);			//P3
+
+		glColor3f(0.0f, 0.0f, 0.0f);	//Set color to black
+		glVertex2d(-0.7, 0.0);			//P1
+		glVertex2d(0.0, 0.4);			//P2
 		glVertex2d(0.0, 0.0);			//P3
 	glEnd();
 }
@@ -147,26 +143,26 @@ void englandFlag() {
 
 	glBegin(GL_QUADS);					//Begin to draw quads
 		glColor3f(1.0f, 1.0f, 1.0f);	//Set color to white
-		glVertex2d(-0.5, -0.5);			//P1
-		glVertex2d(-0.5, 0.5);			//P2
-		glVertex2d(0.5, 0.5);			//P3
-		glVertex2d(0.5, -0.5); 			//P4
+		glVertex2d(-0.7, -0.4);			//P1
+		glVertex2d(-0.7, 0.4);			//P2
+		glVertex2d(0.7, 0.4);			//P3
+		glVertex2d(0.7, -0.4); 			//P4
 	glEnd();
 
 	glBegin(GL_QUADS);				//Begin to draw quads
 		glColor3f(1.0f, 0.0f, 0.0f);	//Set color to red
-		glVertex2d(-0.5, -0.1);			//P1
-		glVertex2d(-0.5, 0.1);			//P2
-		glVertex2d(0.5, 0.1);			//P3
-		glVertex2d(0.5, -0.1);			//P4
+		glVertex2d(-0.7, -0.1);			//P1
+		glVertex2d(-0.7, 0.1);			//P2
+		glVertex2d(0.7, 0.1);			//P3
+		glVertex2d(0.7, -0.1);			//P4
 	glEnd();
 
 	glBegin(GL_QUADS);				//Begin to draw quads
 		glColor3f(1.0f, 0.0f, 0.0f);	//Set color to red
-		glVertex2d(-0.1, -0.5);			//P1
-		glVertex2d(-0.1, 0.5);			//P2
-		glVertex2d(0.1, 0.5);			//P3
-		glVertex2d(0.1, -0.5);			//P4
+		glVertex2d(-0.1, -0.4);			//P1
+		glVertex2d(-0.1, 0.4);			//P2
+		glVertex2d(0.1, 0.4);			//P3
+		glVertex2d(0.1, -0.4);			//P4
 	glEnd();
 }
 
@@ -175,27 +171,11 @@ void scotlandFlag() {
 	glClear(GL_COLOR_BUFFER_BIT);			// clear the color buffer
 
 	glBegin(GL_QUADS);					//Begin to draw quads
-		glColor3f(0.0f, 0.0f, 1.0f);	//Set color to blue
-		glVertex2d(-0.5, -0.5);			//P1
-		glVertex2d(-0.5, 0.5);			//P2
-		glVertex2d(0.5, 0.5);			//P3
-		glVertex2d(0.5, -0.5); 			//P4
-	glEnd();
-
-	glBegin(GL_QUADS);					//Begin to draw quads
-		glColor3f(1.0f, 1.0f, 1.0f);    // Set color to white
-		glVertex2d(0.4, -0.5);          // P1
-		glVertex2d(-0.5, 0.4);          // P2
-		glVertex2d(-0.4, 0.5);          // P3
-		glVertex2d(0.5, -0.4);          // P4
-	glEnd();
-
-	glBegin(GL_QUADS);
-		glColor3f(1.0f, 1.0f, 1.0f);    // Set color to white
-		glVertex2d(-0.5, -0.4);         // P1
-		glVertex2d(0.4, 0.5);           // P2
-		glVertex2d(0.5, 0.4);           // P3
-		glVertex2d(-0.4, -0.5);         // P4
+		glColor3f(1.0f, 1.0f, 1.0f);	//Set color to white
+		glVertex2d(-0.7, -0.4);			//P1
+		glVertex2d(-0.7, 0.4);			//P2
+		glVertex2d(0.7, 0.4);			//P3
+		glVertex2d(0.7, -0.4); 			//P4
 	glEnd();
 
 	glBegin(GL_TRIANGLES);				//Begin to draw triangles
@@ -203,23 +183,17 @@ void scotlandFlag() {
 		glVertex2d(-0.5, -0.5);			//P1
 		glVertex2d(-0.5, -0.4);			//P2
 		glVertex2d(-0.4, -0.5);			//P3
-	glEnd();
-
-	glBegin(GL_TRIANGLES);				//Begin to draw triangles
+	
 		glColor3f(1.0f, 1.0f, 1.0f);	//Set color to white
 		glVertex2d(-0.5, 0.4);			//P1
 		glVertex2d(-0.5, 0.5);			//P2
 		glVertex2d(-0.4, 0.5);			//P3
-	glEnd();
-
-	glBegin(GL_TRIANGLES);				//Begin to draw triangles
+	
 		glColor3f(1.0f, 1.0f, 1.0f);	//Set color to white
 		glVertex2d(0.4, 0.5);			//P1
 		glVertex2d(0.5, 0.5);			//P2
 		glVertex2d(0.5, 0.4);			//P3
-	glEnd();
-
-	glBegin(GL_TRIANGLES);				//Begin to draw triangles
+	
 		glColor3f(1.0f, 1.0f, 1.0f);	//Set color to white
 		glVertex2d(0.4, -0.5);			//P1
 		glVertex2d(0.5, -0.4);			//P2
@@ -338,8 +312,8 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrevInst, LPSTR cmdlineparam, int
 		WS_OVERLAPPEDWINDOW, 
 		CW_USEDEFAULT,  
 		CW_USEDEFAULT,
-		800, 
-		800,
+		600, 
+		600,
 		NULL, 
 		NULL, 
 		wc.hInstance,
