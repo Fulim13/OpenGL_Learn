@@ -8,7 +8,7 @@
 // Constant Title
 #define WINDOW_TITLE "OpenGL Window"
 
-float r = 1.0f;
+float r = 0.0f;
 
 LRESULT WINAPI WindowProcedure(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
