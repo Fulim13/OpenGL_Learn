@@ -15,14 +15,14 @@ float b = 1.0f;
 float quadPosX = 0.0f;
 float quadPosY = 0.0f;
 float quadPosZ = 0.0f;
+
 int questionToShow = 1;
 
-float angle = 0.0f;
+float radian = 0.0f;
 float radius = 0.5f;
 
 float scaleVal = 0;
-bool scaleReset = true;
-float scaleSpeed = .005;
+float scaleSpeed = .001;
 
 // Color variables
 float rStar = 1.0f, gStar = 1.0f, bStar = 0.0f;
@@ -32,67 +32,71 @@ LRESULT WINAPI WindowProcedure(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam
 {
 	switch (msg)
 	{
-	case WM_DESTROY:
-		PostQuitMessage(0);
-		break;
-
-	case WM_KEYDOWN:
-		switch (wParam) {
-		case VK_ESCAPE:
+		case WM_DESTROY:
 			PostQuitMessage(0);
 			break;
-		case VK_UP:
-			quadPosY += 0.1f;
-			break;
-		case VK_DOWN:
-			quadPosY -= 0.1f;
-			break;
-		case VK_LEFT:
-			quadPosX -= 0.1f;
-			break;
-		case VK_RIGHT:
-			quadPosX += 0.1f;
-			break;
-		case 0x52:
-			r += 1.0f;
-			g = .0f;
-			b = .0f;
-			break;
-		case 0x47:
-			g += 1.0f;
-			r = .0f;
-			b = .0f;
-			break;
-		case 0x42:
-			b += 1.0f;
-			g = .0f;
-			r = .0f;
-			break;
-		case 0x31:	// 1 key is pressed
-			questionToShow = 1;
-			break;
-		case 0x32:	// 2 key is pressed
-			questionToShow = 2;
-			break;
-		case 0x33:	// 3 key is pressed
-			questionToShow = 3;
-			break;
-		case 0x34:	// 4 key is pressed
-			questionToShow = 4;
-			break;
-		case VK_SPACE:
-			quadPosX = 0.0f;
-			quadPosY = 0.0f;
-			quadPosZ = 0.0f;
-			r = 1.0f;
-			g = 1.0f;
-			b = 1.0f;
-			break;
-		}
-		break;
 
-	default:
-		break;
+		case WM_KEYDOWN:
+			switch (wParam) {
+				case VK_ESCAPE:
+					PostQuitMessage(0);
+					break;
+
+				case VK_UP:
+					quadPosY += 0.1f;
+					break;
+				case VK_DOWN:
+					quadPosY -= 0.1f;
+					break;
+				case VK_LEFT:
+					quadPosX -= 0.1f;
+					break;
+				case VK_RIGHT:
+					quadPosX += 0.1f;
+					break;
+
+				case 0x52:		// R key is pressed
+					r += 1.0f;
+					g = .0f;
+					b = .0f;
+					break;
+				case 0x47:		// G key is pressed
+					g += 1.0f;
+					r = .0f;
+					b = .0f;
+					break;
+				case 0x42:		// B key is pressed
+					b += 1.0f;
+					g = .0f;
+					r = .0f;
+					break;
+
+				case 0x31:		// 1 key is pressed
+					questionToShow = 1;
+					break;
+				case 0x32:		// 2 key is pressed
+					questionToShow = 2;
+					break;
+				case 0x33:		// 3 key is pressed
+					questionToShow = 3;
+					break;
+				case 0x34:		// 4 key is pressed
+					questionToShow = 4;
+					break;
+
+				case VK_SPACE:
+					quadPosX = 0.0f;
+					quadPosY = 0.0f;
+					quadPosZ = 0.0f;
+					r = 1.0f;
+					g = 1.0f;
+					b = 1.0f;
+					break;
+			}
+			break;
+
+		default:
+			break;
 	}
 
 	return DefWindowProc(hWnd, msg, wParam, lParam);
@@ -132,27 +136,30 @@ bool initPixelFormat(HDC hdc)
 //--------------------------------------------------------------------
 
 void q1() {
-	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
-	glClear(GL_COLOR_BUFFER_BIT);
 	glLoadIdentity();
+
+	// Move in X, Y, and Z directions by pressing arrow keys
 	glTranslatef(quadPosX, quadPosY, quadPosZ);
-	glBegin(GL_QUADS);					//Begin to draw quads
-	glColor3f(r, g, b);
-	glVertex2d(-0.5, -0.5);			//P1
-	glVertex2d(-0.5, 0.5);			//P2
-	glVertex2d(0.5, 0.5);			//P3
-	glVertex2d(0.5, -0.5); 			//P4	
+
+	glBegin(GL_QUADS);	
+		// Change the Color of the Quad by pressing R, G, B keys
+		glColor3f(r, g, b);
+		glVertex2d(-0.5, -0.5);			
+		glVertex2d(-0.5, 0.5);			
+		glVertex2d(0.5, 0.5);			
+		glVertex2d(0.5, -0.5); 			
 	glEnd();
 }
 
+// Redo the star drawing function (Idea - Polygon + 5 triangles)
 void q2() {
-	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
-	glClear(GL_COLOR_BUFFER_BIT);
+	glLoadIdentity();
+
 	float x = 0.0f, y = 0.0f, radius = 0.5f;
 	int numPoints = 5;
 
-	// Set the color (automatically updated)
-		glColor3f(rStar, gStar, bStar);
+	// Set the color (automatically updated every display loop)
+	glColor3f(rStar, gStar, bStar);
 
 	// Update the color values
 	rStar += colorIncrement;
@@ -196,68 +203,62 @@ void q2() {
 }
 
 void q3() {
-	glClear(GL_COLOR_BUFFER_BIT);
-	glLoadIdentity();  // Reset the modelview matrix
+	glLoadIdentity();  
 
 	// Calculate the new position for circular motion
-	float transX = radius * cos(angle);  // X-coordinate based on cosine
-	float transY = radius * sin(angle);  // Y-coordinate based on sine
+	float transX = radius * cos(radian);  // X-coordinate based on cosine
+	float transY = radius * sin(radian);  // Y-coordinate based on sine
 
 	// Increment the angle for counter-clockwise motion
-	angle += 0.05f;  // Adjust increment for speed; smaller value = slower motion
+	radian += 0.0005f;  // Adjust increment for speed; smaller value = slower motion
 
-	// Reset angle to prevent overflow (optional)
-	if (angle >= 2 * PI) {
-		angle -= 2 * PI;
+	// Reset angle to prevent overflow when it exceeds 2*PI which is 360 degrees
+	if (radian >= 2 * PI) {
+		radian -= 2 * PI;
 	}
 
-	// Apply translation (move the object to the new position)
+	// Apply translation (move the object to the new position that is circle around the origin)
 	glTranslatef(transX, transY, 0.0f);
 
+	// Apply translation (move the object to the new position)
+// Why this formula: radian * (180.0f / PI) :
+	// angle : This is the current angle of rotation in radians.
+	// OpenGL expects the angle for rotation in degrees(not radians).
+	// To convert : radian * (180.0f / PI)
+// This formula converts the angle from radians to degrees.
 	// Apply rotation (rotate around the center of the object)
-	glRotatef(angle * (180.0f / PI), 0.0f, 0.0f, 1.0f);
+	glRotatef(radian * (180.0f / PI), 0.0f, 0.0f, 1.0f);
 
 	// Draw the square
 	glBegin(GL_QUADS);
-	glColor3f(1.0f, 0.0f, 0.0f);  // Set color to green
-
-	glVertex2f(-0.03f, 0.03f);  // Top-left
-	glVertex2f(0.03f, 0.03f);   // Top-right
-	glVertex2f(0.03f, -0.03f);  // Bottom-right
-	glVertex2f(-0.03f, -0.03f); // Bottom-left
-
+		glColor3f(1.0f, 0.0f, 0.0f);  //Red
+		glVertex2f(-0.03f, 0.03f);  
+		glVertex2f(0.03f, 0.03f);   
+		glVertex2f(0.03f, -0.03f);  
+		glVertex2f(-0.03f, -0.03f);
 	glEnd();
 }
 
 void q4() {
 	glLoadIdentity();
 
-	// Reset scaling if switching back to this view
-	if (scaleReset) {
-		scaleVal = 1.0f;   // Reset scaling factor
-		scaleReset = false; // Disable reset until view changes
-	}
-
 	scaleVal += scaleSpeed;
 
 	glScalef(scaleVal, scaleVal, 0);
 
 	glBegin(GL_QUADS);
-	glColor3f(1, 0, 0);
-
-	glVertex2f(-.15, .15);
-	glVertex2f(.15, .15);
-	glVertex2f(.15, -.15);
-	glVertex2f(-.15, -.15);
+		glColor3f(1, 0, 0);		// Red
+		glVertex2f(-.15, .15);
+		glVertex2f(.15, .15);
+		glVertex2f(.15, -.15);
+		glVertex2f(-.15, -.15);
 	glEnd();
 }
 
-
-
 void display()
 {
-	glClearColor(0.0f, 0.0f, 0.0f, 0.0f); //clear the color of the screen to black
-	glClear(GL_COLOR_BUFFER_BIT); //Clear the color buffer
+	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+	glClear(GL_COLOR_BUFFER_BIT);
 	switch (questionToShow) {
 	case 1:
 		q1();
@@ -272,9 +273,6 @@ void display()
 		q4();
 		break;
 	}
-
-
-
 }
 //--------------------------------------------------------------------
 
