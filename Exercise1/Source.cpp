@@ -8,12 +8,12 @@
 
 int questionNumber = 1;	//Question number
 
-float x=0.0, y=0.0;							//Origin of circle
-float radius = 0.2;							//Radius of circle
-float angle = 0.0;							//Angle of circle
-float x2=0.0, y2=0.0;						//Point on circle
-const double PI = 3.14159265358979323846;	//Value of PI
-float noOfTriangle = 30;					//Number of triangle to draw circle
+float x = 0.0, y = 0.0;						// Origin of circle
+float radius = 0.2;							// Radius of circle
+float angle = 0.0;							// Angle of circle (in radian)
+float x2 = 0.0, y2 = 0.0;					// Point on circle
+const double PI = 3.14159265;				// Value of PI
+float noOfTriangle = 30;					// Number of triangle to draw circle
 
 
 LRESULT WINAPI WindowProcedure(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
@@ -83,161 +83,153 @@ bool initPixelFormat(HDC hdc)
 //--------------------------------------------------------------------
 
 void drawOutline() {
-	glLineWidth(2.0);					//Set line width to 5
-	glBegin(GL_LINE_LOOP);				//Begin to draw outline
-		glColor3f(0.0f, 0.0f, 1.0f);	//Set color to blue
-		glVertex2d(-0.7, -0.4);			//P1
-		glVertex2d(-0.7, 0.4);			//P2
-		glVertex2d(0.7, 0.4);			//P3
-		glVertex2d(0.7, -0.4); 			//P4	
+	glLineWidth(2.0);						// Set line width to 2
+	glBegin(GL_LINE_LOOP);				
+		glColor3f(0.0f, 0.0f, 1.0f);		// Blue
+		glVertex2d(-0.7, -0.4);			
+		glVertex2d(-0.7, 0.4);			
+		glVertex2d(0.7, 0.4);			
+		glVertex2d(0.7, -0.4); 			
 	glEnd();
 }
 
 void pahangFlag() {
-	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);	// clear background screen to black
-	glClear(GL_COLOR_BUFFER_BIT);			// clear the color buffer
+	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);	// Clear background screen to black
+	glClear(GL_COLOR_BUFFER_BIT);			// Clear the color buffer
 
-	glBegin(GL_QUADS);					//Begin to draw quads
-		glColor3f(1.0f, 1.0f, 1.0f);	//Set color to white
-		glVertex2d(-0.7, 0.0);			//P1
-		glVertex2d(-0.7, 0.4);			//P2
-		glVertex2d(0.7, 0.4);			//P3
-		glVertex2d(0.7, 0.0); 			//P4	
+	glBegin(GL_QUADS);					
+		glColor3f(1.0f, 1.0f, 1.0f);		// White
+		glVertex2d(-0.7, 0.0);			
+		glVertex2d(-0.7, 0.4);			
+		glVertex2d(0.7, 0.4);			
+		glVertex2d(0.7, 0.0); 			
 
-		glColor3f(0.0f, 0.0f, 0.0f);	//Set color to black
-		glVertex2d(-0.7, -0.7);			//P1
-		glVertex2d(-0.7, 0.0);			//P2
-		glVertex2d(0.7, 0.0);			//P3
-		glVertex2d(0.7, -0.4); 			//P4	
+		glColor3f(0.0f, 0.0f, 0.0f);		// Black
+		glVertex2d(-0.7, -0.7);			
+		glVertex2d(-0.7, 0.0);			
+		glVertex2d(0.7, 0.0);			
+		glVertex2d(0.7, -0.4); 			
 	glEnd();
 
 	drawOutline();
 }
 
 void n9Flag() {
-	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);	// clear background screen to black
-	glClear(GL_COLOR_BUFFER_BIT);			// clear the color buffer
+	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);	
+	glClear(GL_COLOR_BUFFER_BIT);			
 
-	glBegin(GL_QUADS);					//Begin to draw quads
-		glColor3f(1.0f, 1.0f, 0.0f);	//Set color to yellow
-		glVertex2d(-0.7, -0.4);			//P1
-		glVertex2d(-0.7, 0.4);			//P2
-		glVertex2d(0.7, 0.4);			//P3
-		glVertex2d(0.7, -0.4); 			//P4
+	glBegin(GL_QUADS);					
+		glColor3f(1.0f, 1.0f, 0.0f);		// Yellow
+		glVertex2d(-0.7, -0.4);			
+		glVertex2d(-0.7, 0.4);			
+		glVertex2d(0.7, 0.4);			
+		glVertex2d(0.7, -0.4); 			
 	glEnd();
 
-	glBegin(GL_TRIANGLES);				//Begin to draw triangles
-		glColor3f(1.0f, 0.0f, 0.0f);	//Set color to red
-		glVertex2d(-0.7, 0.0);			//P1
-		glVertex2d(-0.7, 0.4);			//P2
-		glVertex2d(0.0, 0.4);			//P3
+	glBegin(GL_TRIANGLES);				
+		glColor3f(1.0f, 0.0f, 0.0f);		// Red
+		glVertex2d(-0.7, 0.0);			
+		glVertex2d(-0.7, 0.4);			
+		glVertex2d(0.0, 0.4);			
 
-		glColor3f(0.0f, 0.0f, 0.0f);	//Set color to black
-		glVertex2d(-0.7, 0.0);			//P1
-		glVertex2d(0.0, 0.4);			//P2
-		glVertex2d(0.0, 0.0);			//P3
+		glColor3f(0.0f, 0.0f, 0.0f);		// Black
+		glVertex2d(-0.7, 0.0);			
+		glVertex2d(0.0, 0.4);			
+		glVertex2d(0.0, 0.0);			
 	glEnd();
 }
 
 void englandFlag() {
-	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);	// clear background screen to black
-	glClear(GL_COLOR_BUFFER_BIT);			// clear the color buffer
+	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);	
+	glClear(GL_COLOR_BUFFER_BIT);			
 
-	glBegin(GL_QUADS);					//Begin to draw quads
-		glColor3f(1.0f, 1.0f, 1.0f);	//Set color to white
-		glVertex2d(-0.7, -0.4);			//P1
-		glVertex2d(-0.7, 0.4);			//P2
-		glVertex2d(0.7, 0.4);			//P3
-		glVertex2d(0.7, -0.4); 			//P4
+	glBegin(GL_QUADS);					
+		glColor3f(1.0f, 1.0f, 1.0f);		// White
+		glVertex2d(-0.7, -0.4);			
+		glVertex2d(-0.7, 0.4);			
+		glVertex2d(0.7, 0.4);			
+		glVertex2d(0.7, -0.4); 			
 	glEnd();
 
-	glBegin(GL_QUADS);				//Begin to draw quads
-		glColor3f(1.0f, 0.0f, 0.0f);	//Set color to red
-		glVertex2d(-0.7, -0.1);			//P1
-		glVertex2d(-0.7, 0.1);			//P2
-		glVertex2d(0.7, 0.1);			//P3
-		glVertex2d(0.7, -0.1);			//P4
-	glEnd();
-
-	glBegin(GL_QUADS);				//Begin to draw quads
-		glColor3f(1.0f, 0.0f, 0.0f);	//Set color to red
-		glVertex2d(-0.1, -0.4);			//P1
-		glVertex2d(-0.1, 0.4);			//P2
-		glVertex2d(0.1, 0.4);			//P3
-		glVertex2d(0.1, -0.4);			//P4
+	glBegin(GL_QUADS);				
+		glColor3f(1.0f, 0.0f, 0.0f);		// Red
+		glVertex2d(-0.7, -0.1);			
+		glVertex2d(-0.7, 0.1);			
+		glVertex2d(0.7, 0.1);			
+		glVertex2d(0.7, -0.1);			
+				
+		glVertex2d(-0.1, -0.4);		
+		glVertex2d(-0.1, 0.4);		
+		glVertex2d(0.1, 0.4);			
+		glVertex2d(0.1, -0.4);			
 	glEnd();
 }
 
 void scotlandFlag() {
-	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);	// clear background screen to black
-	glClear(GL_COLOR_BUFFER_BIT);			// clear the color buffer
+	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);	
+	glClear(GL_COLOR_BUFFER_BIT);			
 
-	glBegin(GL_QUADS);						// Begin to draw quads
-	glColor3f(0.0f, 0.0f, 1.0f);		// Set color to blue
-	glVertex2d(-0.7, -0.4);				// P1
-	glVertex2d(-0.7, 0.4);				// P2
-	glVertex2d(0.7, 0.4);				// P3
-	glVertex2d(0.7, -0.4);				// P4
+	glBegin(GL_QUADS);						
+		glColor3f(0.0f, 0.0f, 1.0f);		// Blue
+		glVertex2d(-0.7, -0.4);				
+		glVertex2d(-0.7, 0.4);				
+		glVertex2d(0.7, 0.4);				
+		glVertex2d(0.7, -0.4);				
 	glEnd();
 
-	glBegin(GL_QUADS);						// Begin to draw quads
-	glColor3f(1.0f, 1.0f, 1.0f);        // Set color to white
-	glVertex2d(0.55, -0.4);              // P1
-	glVertex2d(-0.7, 0.3);              // P2
-	glVertex2d(-0.55, 0.4);              // P3
-	glVertex2d(0.7, -0.3);              // P4
+	glBegin(GL_QUADS);						
+		glColor3f(1.0f, 1.0f, 1.0f);		// White
+		glVertex2d(0.55, -0.4);              
+		glVertex2d(-0.7, 0.3);              
+		glVertex2d(-0.55, 0.4);              
+		glVertex2d(0.7, -0.3);              
 
-	glColor3f(1.0f, 1.0f, 1.0f);        // Set color to white
-	glVertex2d(-0.7, -0.3);             // P1
-	glVertex2d(0.55, 0.4);               // P2
-	glVertex2d(0.7, 0.3);               // P3
-	glVertex2d(-0.55, -0.4);             // P4
+		glVertex2d(-0.7, -0.3);            
+		glVertex2d(0.55, 0.4);               
+		glVertex2d(0.7, 0.3);               
+		glVertex2d(-0.55, -0.4);            
 	glEnd();
 
-	glBegin(GL_TRIANGLES);					// Begin to draw triangles
-	glColor3f(1.0f, 1.0f, 1.0f);		// Set color to white
-	glVertex2d(-0.7, -0.4);				// P1
-	glVertex2d(-0.7, -0.3);				// P2
-	glVertex2d(-0.55, -0.4);				// P3
+	glBegin(GL_TRIANGLES);					
+		glColor3f(1.0f, 1.0f, 1.0f);		// White
+		glVertex2d(-0.7, -0.4);				
+		glVertex2d(-0.7, -0.3);				
+		glVertex2d(-0.55, -0.4);				
 
-	glColor3f(1.0f, 1.0f, 1.0f);		// Set color to white
-	glVertex2d(-0.7, 0.3);				// P1
-	glVertex2d(-0.7, 0.4);				// P2
-	glVertex2d(-0.55, 0.4);				// P3
+		glVertex2d(-0.7, 0.3);				
+		glVertex2d(-0.7, 0.4);				
+		glVertex2d(-0.55, 0.4);				
 
-	glColor3f(1.0f, 1.0f, 1.0f);		// Set color to white
-	glVertex2d(0.55, 0.4);				// P1
-	glVertex2d(0.7, 0.4);				// P2
-	glVertex2d(0.7, 0.3);				// P3
+		glVertex2d(0.55, 0.4);				
+		glVertex2d(0.7, 0.4);				
+		glVertex2d(0.7, 0.3);				
 
-	glColor3f(1.0f, 1.0f, 1.0f);		// Set color to white
-	glVertex2d(0.55, -0.4);				// P1
-	glVertex2d(0.7, -0.3);				// P2
-	glVertex2d(0.7, -0.4);				// P3
+		glColor3f(1.0f, 1.0f, 1.0f);		
+		glVertex2d(0.55, -0.4);				
+		glVertex2d(0.7, -0.3);				
+		glVertex2d(0.7, -0.4);				
 	glEnd();
 }
 
 void japanFlag() {
-
-
-	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);	// clear background screen to black
-	glClear(GL_COLOR_BUFFER_BIT);			// clear the color buffer		
+	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);	
+	glClear(GL_COLOR_BUFFER_BIT);			
 	
-	glBegin(GL_QUADS);					//Begin to draw quads
-		glColor3f(1.0f, 1.0f, 1.0f);	//Set color to white
-		glVertex2d(-0.7, -0.4);				// P1
-		glVertex2d(-0.7, 0.4);				// P2
-		glVertex2d(0.7, 0.4);				// P3
-		glVertex2d(0.7, -0.4);				// P4
+	glBegin(GL_QUADS);					
+		glColor3f(1.0f, 1.0f, 1.0f);		// White
+		glVertex2d(-0.7, -0.4);				
+		glVertex2d(-0.7, 0.4);				
+		glVertex2d(0.7, 0.4);				
+		glVertex2d(0.7, -0.4);				
 	glEnd();
 
 	glBegin(GL_TRIANGLE_FAN);
-	glColor3f(1.0f, 0.0f, 0.0f);			//Set color to red
-		glVertex2f(x, y);					// draw the origin of the circle
+		glColor3f(1.0f, 0.0f, 0.0f);		// Red
+		glVertex2f(x, y);					// Draw the origin of the circle
 		for (angle = 0; angle <= 2 * PI; angle += (2*PI)/ noOfTriangle) {
-			x2 = x + radius * cos(angle);	// calculate the x component
-			y2 = y + radius * sin(angle);	// calculate the y component
-			glVertex2f(x2, y2);				// draw the point on the circle
+			x2 = x + radius * cos(angle);	// Calculate the x component
+			y2 = y + radius * sin(angle);	// Calculate the y component
+			glVertex2f(x2, y2);				// Draw the point on the circle
 		}
 	glEnd();
 
@@ -245,35 +237,32 @@ void japanFlag() {
 }
 
 void japanFlagWithoutFills() {
+	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);	
+	glClear(GL_COLOR_BUFFER_BIT);			
 
-
-	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);	// clear background screen to black
-	glClear(GL_COLOR_BUFFER_BIT);			// clear the color buffer		
-
-	glBegin(GL_QUADS);					//Begin to draw quads
-		glColor3f(1.0f, 1.0f, 1.0f);	//Set color to white
-		glVertex2d(-0.5, -0.5);			//P1
-		glVertex2d(-0.5, 0.5);			//P2
-		glVertex2d(0.5, 0.5);			//P3
-		glVertex2d(0.5, -0.5); 			//P4	
+	glBegin(GL_QUADS);					
+		glColor3f(1.0f, 1.0f, 1.0f);		// White
+		glVertex2d(-0.5, -0.5);			
+		glVertex2d(-0.5, 0.5);			
+		glVertex2d(0.5, 0.5);			
+		glVertex2d(0.5, -0.5); 			
 	glEnd();
 
 	glBegin(GL_LINE_LOOP);
-	glColor3f(1.0f, 0.0f, 0.0f);		//Set color to red
+	glColor3f(1.0f, 0.0f, 0.0f);			// Red
 
-	//NOTE: move the origin
+	//NOTE: Move the origin
 	float x = 0.5, y = 0.5;
 
-	//NOTE: no need to draw the origin for circle without fill
+	//NOTE: No need to draw the origin for Circle without fill
 	// glVertex2f(x, y);				// draw the origin of the circle
-	for (angle = PI; angle <= 2 * PI; angle += PI / noOfTriangle) {
-
+	for (angle = PI; angle <= 2 * PI; angle += PI / noOfTriangle) {			// Half circle with the flat side on top
 	//NOTE: Changing the angle to draw the circle
-	//for (angle = 0; angle <= PI; angle += PI / noOfTriangle) {
-	//for (angle = 0; angle <= 2 * PI; angle += (2 * PI) / noOfTriangle) {
-		x2 = x + radius * cos(angle);	// calculate the x component
-		y2 = y + radius * sin(angle);	// calculate the y component
-		glVertex2f(x2, y2);				// draw the point on the circle
+	//for (angle = 0; angle <= PI; angle += PI / noOfTriangle) {			// Half circle with the flat side on bottom
+	//for (angle = 0; angle <= 2 * PI; angle += (2 * PI) / noOfTriangle) {	// Full circle
+		x2 = x + radius * cos(angle);	// Calculate the x component
+		y2 = y + radius * sin(angle);	// Calculate the y component
+		glVertex2f(x2, y2);				// Draw the point on the circle
 	}
 	glEnd();
 
@@ -281,158 +270,166 @@ void japanFlagWithoutFills() {
 }
 
 void smileFace() {
-	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);	// clear background screen to black
-	glClear(GL_COLOR_BUFFER_BIT);			// clear the color buffer
+	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);	
+	glClear(GL_COLOR_BUFFER_BIT);			
 
-	glBegin(GL_QUADS);						// Begin to draw quads
-	glColor3f(1.0f, 1.0f, 1.0f);        // Set color to white
-	glVertex2d(1.0, 1.0);              // P1
-	glVertex2d(-1.0, 1.0);              // P1
-	glVertex2d(-1.0, -1.0);              // P1
-	glVertex2d(1.0, -1.0);              // P1
+	// Background
+	glBegin(GL_QUADS);						
+		glColor3f(1.0f, 1.0f, 1.0f);			// White
+		glVertex2d(1.0, 1.0);              
+		glVertex2d(-1.0, 1.0);              
+		glVertex2d(-1.0, -1.0);             
+		glVertex2d(1.0, -1.0);              
 	glEnd();
 	
+	// Head
 	glBegin(GL_TRIANGLE_FAN);
-	glColor3f(1.0f, 1.0f, 0.0f);			//Set color to red
-	glVertex2f(x, y);					// draw the origin of the circle
-	for (angle = 0; angle <= PI; angle += PI / noOfTriangle) {
-		x2 = x + radius * cos(angle);	// calculate the x component
-		y2 = y + radius * sin(angle);	// calculate the y component
-		glVertex2f(x2, y2);				// draw the point on the circle
-	}
+		glColor3f(1.0f, 1.0f, 0.0f);			// Yellow
+		glVertex2f(x, y);					
+		for (angle = 0; angle <= PI; angle += PI / noOfTriangle) {
+			x2 = x + radius * cos(angle);	
+			y2 = y + radius * sin(angle);	
+			glVertex2f(x2, y2);				
+		}
 	glEnd();
 
-	glBegin(GL_QUADS);						// Begin to draw quads
-	glColor3f(1.0f, 1.0f, 0.0f);        // Set color to white
-	glVertex2d(0.2, .0);              // P1
-	glVertex2d(-0.2, .0);              // P2
-	glVertex2d(-0.2, -.8);              // P3
-	glVertex2d(0.2, -.8);              // P4
+	// Face and Body
+	glBegin(GL_QUADS);						
+		glColor3f(1.0f, 1.0f, 0.0f);			// Yellow
+		glVertex2d(0.2, .0);              
+		glVertex2d(-0.2, .0);              
+		glVertex2d(-0.2, -.8);              
+		glVertex2d(0.2, -.8);              
 	glEnd();
 
-	glBegin(GL_QUADS);						// Begin to draw quads
-	glColor3f(.0f, .0f, .0f);        // Set color to white
-	glVertex2d(0.2, .0);              // P1
-	glVertex2d(-0.2, .0);              // P2
-	glVertex2d(-0.2, -.1);              // P3
-	glVertex2d(0.2, -.1);              // P4
+	// Spectacles
+	glBegin(GL_QUADS);						
+		glColor3f(.0f, .0f, .0f);				// Black
+		glVertex2d(0.2, .0);              
+		glVertex2d(-0.2, .0);              
+		glVertex2d(-0.2, -.1);              
+		glVertex2d(0.2, -.1);              
 	glEnd();
 
+	// Eyes
 	glBegin(GL_TRIANGLE_FAN);
-	glColor3f(1.0f, 1.0f, 1.0f);			//Set color to red
-	float x= -.07, y = -.05;
-	glVertex2f(x, y);					// draw the origin of the circle
-	for (angle = 0; angle < 2 * PI; angle += (2 * PI) / noOfTriangle) {
-		x2 = x + 0.07 * cos(angle);	// calculate the x component
-		y2 = y + 0.07 * sin(angle);	// calculate the y component
-		glVertex2f(x2, y2);				// draw the point on the circle
-	}
-	glEnd();
-
-	glBegin(GL_TRIANGLE_FAN);
-	glColor3f(1.0f, 1.0f, 1.0f);			//Set color to red
-	x = .07, y = -.05;
-	glVertex2f(x, y);					// draw the origin of the circle
-	for (angle = 0; angle < 2 * PI; angle += (2 * PI) / noOfTriangle) {
-		x2 = x + 0.07 * cos(angle);	// calculate the x component
-		y2 = y + 0.07 * sin(angle);	// calculate the y component
-		glVertex2f(x2, y2);				// draw the point on the circle
-	}
+		glColor3f(1.0f, 1.0f, 1.0f);			// White
+		float x= -.07, y = -.05;
+		glVertex2f(x, y);					
+		for (angle = 0; angle < 2 * PI; angle += (2 * PI) / noOfTriangle) {
+			x2 = x + 0.07 * cos(angle);	
+			y2 = y + 0.07 * sin(angle);	
+			glVertex2f(x2, y2);				
+		}
 	glEnd();
 
 	glBegin(GL_TRIANGLE_FAN);
-	glColor3f(0.0f, 0.0f, 0.0f);			//Set color to red
-	x = .07, y = -.05;
-	glVertex2f(x, y);					// draw the origin of the circle
-	for (angle = 0; angle < 2 * PI; angle += (2 * PI) / noOfTriangle) {
-		x2 = x + 0.05 * cos(angle);	// calculate the x component
-		y2 = y + 0.05 * sin(angle);	// calculate the y component
-		glVertex2f(x2, y2);				// draw the point on the circle
-	}
+		glColor3f(1.0f, 1.0f, 1.0f);			// White
+		x = .07, y = -.05;
+		glVertex2f(x, y);					
+		for (angle = 0; angle < 2 * PI; angle += (2 * PI) / noOfTriangle) {
+			x2 = x + 0.07 * cos(angle);	
+			y2 = y + 0.07 * sin(angle);	
+			glVertex2f(x2, y2);				
+		}
+	glEnd();
+
+	// Retina
+	glBegin(GL_TRIANGLE_FAN);
+		glColor3f(0.0f, 0.0f, 0.0f);			// Black
+		x = .07, y = -.05;
+		glVertex2f(x, y);					
+		for (angle = 0; angle < 2 * PI; angle += (2 * PI) / noOfTriangle) {
+			x2 = x + 0.05 * cos(angle);	
+			y2 = y + 0.05 * sin(angle);	
+			glVertex2f(x2, y2);				
+		}
 	glEnd();
 
 
 	glBegin(GL_TRIANGLE_FAN);
-	glColor3f(0.0f, 0.0f, 0.0f);			//Set color to red
-	x = -.07, y = -.05;
-	glVertex2f(x, y);					// draw the origin of the circle
-	for (angle = 0; angle < 2 * PI; angle += (2 * PI) / noOfTriangle) {
-		x2 = x + 0.05 * cos(angle);	// calculate the x component
-		y2 = y + 0.05 * sin(angle);	// calculate the y component
-		glVertex2f(x2, y2);				// draw the point on the circle
-	}
+		glColor3f(0.0f, 0.0f, 0.0f);			// Black
+		x = -.07, y = -.05;
+		glVertex2f(x, y);					
+		for (angle = 0; angle < 2 * PI; angle += (2 * PI) / noOfTriangle) {
+			x2 = x + 0.05 * cos(angle);	
+			y2 = y + 0.05 * sin(angle);	
+			glVertex2f(x2, y2);				
+		}
 	glEnd();
 
-	
-
+	// Spectacles Frame/Shape
 	glBegin(GL_LINE_LOOP);
-	glColor3f(0.0f, 0.0f, 0.0f);			//Set color to red
-	x = -.07, y = -.05;
-	for (angle = 0; angle < 2 * PI; angle += (2 * PI) / noOfTriangle) {
-		x2 = x + 0.07 * cos(angle);	// calculate the x component
-		y2 = y + 0.07 * sin(angle);	// calculate the y component
-		glVertex2f(x2, y2);				// draw the point on the circle
-	}
-	glEnd();
-
-	glBegin(GL_LINE_LOOP);
-	glColor3f(0.0f, 0.0f, 0.0f);			//Set color to red
-	x = .07, y = -.05;
-	for (angle = 0; angle < 2 * PI; angle += (2 * PI) / noOfTriangle) {
-		x2 = x + 0.07 * cos(angle);	// calculate the x component
-		y2 = y + 0.07 * sin(angle);	// calculate the y component
-		glVertex2f(x2, y2);				// draw the point on the circle
-	}
+		glColor3f(0.0f, 0.0f, 0.0f);			// Black
+		x = -.07, y = -.05;
+		for (angle = 0; angle < 2 * PI; angle += (2 * PI) / noOfTriangle) {
+			x2 = x + 0.07 * cos(angle);	
+			y2 = y + 0.07 * sin(angle);	
+			glVertex2f(x2, y2);				
+		}
 	glEnd();
 
 	glBegin(GL_LINE_LOOP);
-	glColor3f(0.0f, 0.0f, 0.0f);			//Set color to red
-	x = 0, y = -.2;
-	for (angle = PI; angle < 2 * PI; angle += (2 * PI) / noOfTriangle) {
-		x2 = x + 0.07 * cos(angle);	// calculate the x component
-		y2 = y + 0.07 * sin(angle);	// calculate the y component
-		glVertex2f(x2, y2);				// draw the point on the circle
-	}
+		glColor3f(0.0f, 0.0f, 0.0f);			// Black
+		x = .07, y = -.05;
+		for (angle = 0; angle < 2 * PI; angle += (2 * PI) / noOfTriangle) {
+			x2 = x + 0.07 * cos(angle);	
+			y2 = y + 0.07 * sin(angle);	
+			glVertex2f(x2, y2);				
+		}
 	glEnd();
 
-	glBegin(GL_QUADS);						// Begin to draw quads
-	glColor3f(1.0f, 1.0f, 0.0f);        // Set color to white
-	glVertex2d(-0.2, -.5);              // P1
-	glVertex2d(-0.2, -.45);              // P2
-	glVertex2d(-0.4, -.45);              // P3
-	glVertex2d(-0.4, -.5);              // P4
+	// Smile
+	glBegin(GL_LINE_LOOP);
+		glColor3f(0.0f, 0.0f, 0.0f);			// Black
+		x = 0, y = -.2;
+		for (angle = PI; angle < 2 * PI; angle += (2 * PI) / noOfTriangle) {
+			x2 = x + 0.07 * cos(angle);	
+			y2 = y + 0.07 * sin(angle);	
+			glVertex2f(x2, y2);				
+		}
 	glEnd();
 
-	glBegin(GL_QUADS);						// Begin to draw quads
-	glColor3f(1.0f, 1.0f, 0.0f);        // Set color to white
-	glVertex2d(0.2, -.5);              // P1
-	glVertex2d(0.2, -.45);              // P2
-	glVertex2d(0.4, -.45);              // P3
-	glVertex2d(0.4, -.5);              // P4
+	// Hand
+	glBegin(GL_QUADS);						
+		glColor3f(1.0f, 1.0f, 0.0f);			// Yellow
+		glVertex2d(-0.2, -.5);              
+		glVertex2d(-0.2, -.45);              
+		glVertex2d(-0.4, -.45);              
+		glVertex2d(-0.4, -.5);              
 	glEnd();
 
-	glBegin(GL_QUADS);						// Begin to draw quads
-	glColor3f(0.0f, 0.0f, 1.0f);        // Set color to white
-	glVertex2d(0.2, -.4);              // P1
-	glVertex2d(-0.2, -.4);              // P2
-	glVertex2d(-0.2, -.45);              // P3
-	glVertex2d(0.2, -.45);              // P4
+	glBegin(GL_QUADS);						
+		glColor3f(1.0f, 1.0f, 0.0f);			// Yellow
+		glVertex2d(0.2, -.5);              
+		glVertex2d(0.2, -.45);              
+		glVertex2d(0.4, -.45);              
+		glVertex2d(0.4, -.5);              
 	glEnd();
 
-	glBegin(GL_QUADS);						// Begin to draw quads
-	glColor3f(0.0f, 0.0f, 1.0f);        // Set color to white
-	glVertex2d(0.1, -.45);              // P1
-	glVertex2d(-0.1, -.45);              // P2
-	glVertex2d(-0.1, -.6);              // P3
-	glVertex2d(0.1, -.6);              // P4
+	// Shirt
+	glBegin(GL_QUADS);						
+		glColor3f(0.0f, 0.0f, 1.0f);			// Blue
+		glVertex2d(0.2, -.4);              
+		glVertex2d(-0.2, -.4);              
+		glVertex2d(-0.2, -.45);              
+		glVertex2d(0.2, -.45);              
 	glEnd();
 
-	glBegin(GL_QUADS);						// Begin to draw quads
-	glColor3f(0.0f, 0.0f, 1.0f);        // Set color to white
-	glVertex2d(0.2, -.6);              // P1
-	glVertex2d(-0.2, -.6);              // P2
-	glVertex2d(-0.2, -.8);              // P3
-	glVertex2d(0.2, -.8);              // P4
+	glBegin(GL_QUADS);						
+		glColor3f(0.0f, 0.0f, 1.0f);			// Blue    
+		glVertex2d(0.1, -.45);              
+		glVertex2d(-0.1, -.45);              
+		glVertex2d(-0.1, -.6);              
+		glVertex2d(0.1, -.6);              
+	glEnd();
+
+	glBegin(GL_QUADS);						
+		glColor3f(0.0f, 0.0f, 1.0f);			// Blue
+		glVertex2d(0.2, -.6);              
+		glVertex2d(-0.2, -.6);              
+		glVertex2d(-0.2, -.8);              
+		glVertex2d(0.2, -.8);              
 	glEnd();
 }
 
