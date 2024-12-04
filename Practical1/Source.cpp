@@ -8,7 +8,7 @@
 // Constant Title
 #define WINDOW_TITLE "OpenGL Window"
 
-float r = 0.0f;
+float r = 1.0f;
 
 LRESULT WINAPI WindowProcedure(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
@@ -67,20 +67,22 @@ bool initPixelFormat(HDC hdc)
 
 void display()
 {
-	glClearColor(r, 0.0f, 0.0f, 0.0f); //clear the color of the screen to red
-	glClear(GL_COLOR_BUFFER_BIT); //Clear the color buffer
+	glClearColor(r, 0.0f, 0.0f, 0.0f);	//Clear the color of the screen to red
+	glClear(GL_COLOR_BUFFER_BIT);		//Clear the color buffer
 	
-	//glPointSize(10.0f);	//Set point size
+	//glPointSize(10.0f);				//Set point size if glBegin(GL_POINTS) is used
 
-	glLineWidth(5.0f);		//Set line width
+	glLineWidth(5.0f);					//Set line width
 
-	glBegin(GL_POLYGON);	//Begin to draw line
-	glColor3f(1, 0, 0);		// RED
-	glVertex2f(-.5, 0);		// P1
-	glColor3f(0, 1, 0);		//GREEN
-	glVertex2f(0, .5);		//P2
-	glColor3f(0, 0, 1);		//Blue
-	glVertex2f(.5, 0);		//P3
+	glBegin(GL_POLYGON);				//Begin to draw line
+		glColor3f(1, 0, 0);					// RED
+		glVertex2f(-.5, 0);					// P1
+
+		glColor3f(0, 1, 0);					//GREEN
+		glVertex2f(0, .5);					//P2
+
+		glColor3f(0, 0, 1);					//Blue
+		glVertex2f(.5, 0);					//P3
 	glEnd();
 }
 //--------------------------------------------------------------------
