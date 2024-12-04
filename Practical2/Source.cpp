@@ -1,4 +1,3 @@
-
 #include <Windows.h>
 #include <gl/GL.h>
 
@@ -13,6 +12,7 @@ float b = 1.0f;
 float quadPosX = 0.0f;
 float quadPosY = 0.0f;
 float quadPosZ = 0.0f;
+
 int questionToShow = 1;
 
 LRESULT WINAPI WindowProcedure(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
@@ -28,6 +28,7 @@ LRESULT WINAPI WindowProcedure(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam
 		case VK_ESCAPE:
 			PostQuitMessage(0);
 			break;
+
 		case VK_UP:
 			quadPosY += 0.1f;
 			break;
@@ -40,21 +41,23 @@ LRESULT WINAPI WindowProcedure(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam
 		case VK_RIGHT:
 			quadPosX += 0.1f;
 			break;
-		case 0x52:
+
+		case 0x52:	// R key is pressed
 			r += 1.0f;
 			g = .0f;
 			b = .0f;
 			break;
-		case 0x47:
+		case 0x47:	// G key is pressed
 			g += 1.0f;
 			r = .0f;
 			b = .0f;
 			break;
-		case 0x42:
+		case 0x42:	// B key is pressed
 			b += 1.0f;
 			g = .0f;
 			r = .0f;
 			break;
+
 		case 0x31:	// 1 key is pressed
 			questionToShow = 1;
 			break;
@@ -106,58 +109,69 @@ bool initPixelFormat(HDC hdc)
 
 void display()
 {
-	glClearColor(0.0f, 0.0f, 0.0f, 0.0f); //clear the color of the screen to black
-	glClear(GL_COLOR_BUFFER_BIT); //Clear the color buffer
+	glClearColor(0.0f, 0.0f, 0.0f, 0.0f); 
+	glClear(GL_COLOR_BUFFER_BIT);
 	switch (questionToShow) {
-	case 1:
-		glLoadIdentity();
+		// See the Difference between Translate + Rotate and Rotate + Translate
+		// Translate + Rotate: Color of Triangle is Red, Green, Blue
+		// Rotate + Translate: Color of Triangle is Green, Green, Green
+		case 1:
+			glLoadIdentity();
 
-		glLineWidth(5.0f);		//Set line width
+			glLineWidth(5.0f);
 
-		// Transformation see in reverse order
-		glRotatef(30, 0.0f, 0.0f, 1.0f);
-		glTranslatef(0.5f, 0.0f, 0.0f);
+			// Transformation see in reverse order (Translate first then rotate)
+			glRotatef(30, 0.0f, 0.0f, 1.0f);
+			glTranslatef(0.5f, 0.0f, 0.0f);
 
-		glBegin(GL_POLYGON);	//Begin to draw line
-		glColor3f(1, 0, 0);		// RED
-		glVertex2f(-.5, 0);		// P1
-		glColor3f(0, 1, 0);		//GREEN
-		glVertex2f(0, .5);		//P2
-		glColor3f(0, 0, 1);		//Blue
-		glVertex2f(.5, 0);		//P3
-		glEnd();
+			// Triangle
+			glBegin(GL_POLYGON);	
+				glColor3f(1, 0, 0);		// Red
+				glVertex2f(-.5, 0);		
+
+				glColor3f(0, 1, 0);		// Green
+				glVertex2f(0, .5);		
+
+				glColor3f(0, 0, 1);		//Blue
+				glVertex2f(.5, 0);		
+			glEnd();
 
 
-		glLoadIdentity();
+			glLoadIdentity();
 
-		glLineWidth(5.0f);		//Set line width
+			glLineWidth(5.0f);		
 
-		// Transformation see in reverse order
-		glTranslatef(0.5f, 0.0f, 0.0f);
-		glRotatef(30, 0.0f, 0.0f, 1.0f);
+			// Transformation see in reverse order (Rotate first then translate)
+			glTranslatef(0.5f, 0.0f, 0.0f);
+			glRotatef(30, 0.0f, 0.0f, 1.0f);
 
-		glBegin(GL_POLYGON);	//Begin to draw line
-		glColor3f(0, 1, 0);		// GREEN
-		glVertex2f(-.5, 0);		// P1
-		glVertex2f(0, .5);		//P2
-		glVertex2f(.5, 0);		//P3
-		glEnd();
-		break;
-	case 2:
-		glLoadIdentity();
-		glTranslatef(quadPosX, quadPosY, quadPosZ);
-		glBegin(GL_QUADS);					//Begin to draw quads
-		glColor3f(r, g, b);	
-		glVertex2d(-0.5, -0.5);			//P1
-		glVertex2d(-0.5, 0.5);			//P2
-		glVertex2d(0.5, 0.5);			//P3
-		glVertex2d(0.5, -0.5); 			//P4	
-		glEnd();
-		break;
+			// Triangle
+			glBegin(GL_POLYGON);	
+				glColor3f(0, 1, 0);		// Green
+				glVertex2f(-.5, 0);		
+				glVertex2f(0, .5);		
+				glVertex2f(.5, 0);		
+			glEnd();
+
+			break;
+
+		// A movable square with color changing capability
+		// Use arrow keys to move the square
+		// Use R, G, B keys to change the color of the square
+		case 2:
+			glLoadIdentity();
+
+			glTranslatef(quadPosX, quadPosY, quadPosZ);
+
+			glBegin(GL_QUADS);					
+				glColor3f(r, g, b);	
+				glVertex2d(-0.5, -0.5);			
+				glVertex2d(-0.5, 0.5);			
+				glVertex2d(0.5, 0.5);			
+				glVertex2d(0.5, -0.5);
+			glEnd();
+			break;
 	}
-	
-
-	
 }
 //--------------------------------------------------------------------
 
