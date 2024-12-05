@@ -10,12 +10,7 @@
 
 using namespace std;
 
-
 int questionToShow = 1;
-
-// Color variables
-float rStar = 1.0f, gStar = 1.0f, bStar = 0.0f;
-float colorIncrement = 0.01f;
 
 //cude variables
 float cubeX = 0.0f;
@@ -156,10 +151,6 @@ bool initPixelFormat(HDC hdc)
 //--------------------------------------------------------------------
 
 void cube() {
-	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-	glLoadIdentity();
 	glTranslatef(cubeX, cubeY, cubeZ);
 	glRotatef(cubeRotX, 1.0f, 0.0f, 0.0f);
 	glRotatef(cubeRotY, 0.0f, 1.0f, 0.0f);
@@ -215,10 +206,6 @@ void cube() {
 }
 
 void pyramid() {
-	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-	glLoadIdentity();
 	glTranslatef(cubeX, cubeY, cubeZ);
 	glRotatef(cubeRotX, 1.0f, 0.0f, 0.0f);
 	glRotatef(cubeRotY, 0.0f, 1.0f, 0.0f);
@@ -333,19 +320,19 @@ void arm() {
 
 void display()
 {
-	glClearColor(0.0f, 0.0f, 0.0f, 0.0f); //clear the color of the screen to black
-	glClear(GL_COLOR_BUFFER_BIT); //Clear the color buffer
+	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
 	switch (questionToShow) {
 	case 1:
+		glLoadIdentity();
 		cube();
 		break;
 	case 2:
+		glLoadIdentity();
 		pyramid();
 		break;
 	case 3:
-		glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
 		glLoadIdentity();
 		glPushMatrix();
 			glTranslatef(cubeX, cubeY, cubeZ);
