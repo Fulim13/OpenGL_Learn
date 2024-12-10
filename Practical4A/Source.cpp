@@ -25,6 +25,7 @@ float movementSpeed = 0.05;
 float rotationSpeed = 1.0f; // rotation not use radian, use degree
 
 float upperArmRotateZ = 0.0f;
+float lowerArmRotateZ = 0.0f;
 float wholeArmRotateZ = 0.0f;
 
 LRESULT WINAPI WindowProcedure(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
@@ -53,6 +54,13 @@ LRESULT WINAPI WindowProcedure(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam
 				case VK_RIGHT:
 					wholeArmRotateZ -= rotationSpeed;
 					break;
+				case 'W':
+					lowerArmRotateZ += rotationSpeed;
+					break;
+				case 'S':
+					lowerArmRotateZ -= rotationSpeed;
+					break;
+
 				case VK_NUMPAD8:
 					cubeZ += movementSpeed;
 					break;
@@ -306,14 +314,14 @@ void drawLineCube(float v1_top_left_front[3], float v2_bottom_left_front[3],
 
 void arm() {
 	// Define the vertices of the cube
-	float v1[3] = { -0.4f, 0.1f, -0.1f };
-	float v2[3] = { -0.4f, -0.1f, -0.1f };
-	float v3[3] = { 0.1f, -0.1f, -0.1f };
-	float v4[3] = { 0.1f, 0.1f, -0.1f };
-	float v5[3] = { -0.4f, 0.1f, 0.1f };
-	float v6[3] = { -0.4f, -0.1f, 0.1f };
-	float v7[3] = { 0.1f, -0.1f, 0.1f };
-	float v8[3] = { 0.1f, 0.1f, 0.1f };
+	float v1[3] = { -0.5f, 0.2f, -0.1f };
+	float v2[3] = { -0.5f, 0.0f, -0.1f };
+	float v3[3] = { 0.0f, 0.0f, -0.1f };
+	float v4[3] = { 0.0f, 0.2f, -0.1f };
+	float v5[3] = { -0.5f, 0.2f, 0.1f };
+	float v6[3] = { -0.5f, 0.0f, 0.1f };
+	float v7[3] = { 0.0f, 0.0f, 0.1f };
+	float v8[3] = { 0.0f, 0.2f, 0.1f };
 
 	drawLineCube(v1, v2, v3, v4, v5, v6, v7, v8);
 }
@@ -339,10 +347,14 @@ void display()
 			glRotatef(cubeRotX, 1.0f, 0.0f, 0.0f);
 			glRotatef(cubeRotY, 0.0f, 1.0f, 0.0f);
 			glRotatef(wholeArmRotateZ, 0.0f, 0.0f, 1.0f);
-				arm();
 				glPushMatrix();
-				glRotatef(upperArmRotateZ, 0.0f, 0.0f, 1.0f);
-				glTranslatef(0.3f, 0.0f, 0.0f);
+					glRotatef(upperArmRotateZ, 0.0f, 0.0f, 1.0f);
+					arm();
+				glPopMatrix();
+
+				glPushMatrix();
+					glRotatef(lowerArmRotateZ, 0.0f, 0.0f, 1.0f);
+					glTranslatef(0.5f, 0.0f, 0.0f);
 					arm();
 				glPopMatrix();
 		glPopMatrix();
