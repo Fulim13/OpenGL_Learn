@@ -1,6 +1,7 @@
 
 #include <Windows.h>
 #include <gl/GL.h>
+#include <math.h>
 
 #pragma comment (lib, "OpenGL32.lib")
 
@@ -19,7 +20,17 @@ float quadPosZ2 = 0.0f;
 float quadPosX3 = 0.0f;
 float quadPosY3 = 0.0f;
 float quadPosZ3 = 0.0f;
-int questionToShow = 1;
+int questionToShow = 3;
+
+float x = 0.0, y = 0.0;						// Origin of circle
+float radius = 0.2;							// Radius of circle
+float angle = 0.0;							// Angle of circle (in radian)
+float x2 = 0.0, y2 = 0.0;					// Point on circle
+const double PI = 3.14159265;				// Value of PI
+float noOfTriangle = 30;					// Number of triangle to draw circle
+
+float spinnerAngle = 0.0f;
+
 
 LRESULT WINAPI WindowProcedure(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
@@ -105,6 +116,16 @@ LRESULT WINAPI WindowProcedure(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam
 				quadPosY = 0.0f;
 				quadPosZ = 0.0f;
 				break;
+
+			case 'Z':
+				spinnerAngle += 1.0f;
+				break;
+			case 'X':
+				spinnerAngle -= 1.0f;
+				break;
+			case 'C':
+				spinnerAngle = 0.0f;
+				break;
 		}
 		break;
 
@@ -148,8 +169,224 @@ bool initPixelFormat(HDC hdc)
 }
 //--------------------------------------------------------------------
 
-void drawWindMill() {
+void drawCircle(){
+	glBegin(GL_TRIANGLE_FAN);
+	glColor3f(1.0f, 1.0f, 1.0f);		// Red
+	glVertex2f(x, y);					// Draw the origin of the circle
+	for (angle = 0; angle <= 2 * PI; angle += (2 * PI) / noOfTriangle) {
+		x2 = x + radius * cos(angle);	// Calculate the x component
+		y2 = y + radius * sin(angle);	// Calculate the y component
+		glVertex2f(x2, y2);				// Draw the point on the circle
+	}
+	glEnd();
+}
 
+void drawCloud() {
+	glPushMatrix();
+		glTranslatef(0.2f, 0.0f, 0.0f);
+		glScalef(0.5f, 0.5f, 1.0f);
+		drawCircle();
+	glPopMatrix();
+
+	glPushMatrix();	
+		glTranslatef(-0.2f, 0.0f, 0.0f);
+		glScalef(0.45f, 0.45f, 1.0f);
+		drawCircle();
+	glPopMatrix();
+
+	glPushMatrix();
+		drawCircle();
+	glPopMatrix();
+
+	glPushMatrix();
+		glTranslatef(0.1f, 0.13f, 0.0f);
+		glScalef(0.4f, 0.4f, 1.0f);
+		drawCircle();
+	glPopMatrix();
+
+	glPushMatrix();
+		glTranslatef(-0.1f, 0.13f, 0.0f);
+		glScalef(0.4f, 0.4f, 1.0f);
+		drawCircle();
+	glPopMatrix();
+
+	glPushMatrix();
+		glTranslatef(0.2f, 0.07f, 0.0f);
+		glScalef(0.4f, 0.4f, 1.0f);
+		drawCircle();
+	glPopMatrix();
+
+	glPushMatrix();
+		glTranslatef(-0.2f, 0.07f, 0.0f);
+		glScalef(0.4f, 0.4f, 1.0f);
+		drawCircle();
+	glPopMatrix();
+
+	glPushMatrix();
+		glTranslatef(0.15f, -0.1f, 0.0f);
+		glScalef(0.4f, 0.4f, 1.0f);
+		drawCircle();
+	glPopMatrix();
+
+	glPushMatrix();
+		glTranslatef(-0.15f, -0.1f, 0.0f);
+		glScalef(0.4f, 0.4f, 1.0f);
+		drawCircle();
+	glPopMatrix();
+
+}
+
+void drawTriangle(float r, float g, float b) {
+	glBegin(GL_TRIANGLES);
+		glColor3f(r, g, b);		// Green
+		glVertex2f(0.0, 0.5);
+		glVertex2f(0.5, -0.5);
+		glVertex2f(-0.5, -0.5);
+	glEnd();
+}
+
+void drawBuilding() {
+	glColor3f(.95f, .82f, .74f);
+
+	glBegin(GL_QUADS);
+	glVertex2f(-.1, .3f);
+	glVertex2f(.1f, .3f);
+	glVertex2f(.25f, -.7f);
+	glVertex2f(-.25f, -.7f);
+	glEnd();
+
+	glPushMatrix();
+	glRotatef(spinnerAngle, 0.0f, 0.0f, 1.0f); // Rotate the spinner
+	glColor3f(0.72f, 0.45f, 0.2f);
+	
+
+	glPushMatrix();
+		glTranslatef(-.1f, .0f, .0f);
+		glRotatef(-45.0f, .0f, .0f, 1.0f);
+		glBegin(GL_QUADS);
+		glVertex2f(-0.75f, 0.3f);
+		glVertex2f(0.55f, 0.3f);
+		glVertex2f(0.55f, 0.2f);
+		glVertex2f(-0.75f, 0.2f);
+		glEnd();
+	glPopMatrix();
+
+	glPushMatrix();
+		glTranslatef(.1f, .0f, .0f);
+		glRotatef(45.0f, .0f, .0f, 1.0f);
+		glBegin(GL_QUADS);
+		glVertex2f(-0.55f, 0.3f);
+		glVertex2f(0.75f, 0.3f);
+		glVertex2f(0.75f, 0.2f);
+		glVertex2f(-0.55f, 0.2f);
+		glEnd();
+	glPopMatrix();
+
+	glPushMatrix();
+		glBegin(GL_QUADS);
+		glVertex2f(-0.65f, 0.3f);
+		glVertex2f(0.65f, 0.3f);
+		glVertex2f(0.65f, 0.2f);
+		glVertex2f(-0.65f, 0.2f);
+		glEnd();
+	glPopMatrix();
+
+	glPushMatrix();
+		glTranslatef(.25f, .2f, .0f);
+		glRotatef(90.0f, .0f, .0f, 1.0f);
+		glBegin(GL_QUADS);
+		glVertex2f(-0.65f, 0.3f);
+		glVertex2f(0.65f, 0.3f);
+		glVertex2f(0.65f, 0.2f);
+		glVertex2f(-0.65f, 0.2f);
+		glEnd();
+	glPopMatrix();
+
+	glPopMatrix();
+
+}
+
+
+
+void drawMountain(float r, float g, float b) {
+	drawTriangle(r, g, b);
+}
+
+
+void drawSun() {
+
+}
+
+void drawBackground() {
+	// Draw the blue sky
+	glColor3f(0.529f, 0.808f, 0.922f); // Sky blue color
+	glBegin(GL_QUADS);
+	glVertex2f(-1.0f, 1.0f);  // Top left
+	glVertex2f(1.0f, 1.0f);  // Top right
+	glVertex2f(1.0f, -0.2f); // Bottom right
+	glVertex2f(-1.0f, -0.2f); // Bottom left
+	glEnd();
+
+	// Draw the green ground
+	glColor3f(0.0f, 0.6f, 0.0f); // Green color
+	glBegin(GL_QUADS);
+	glVertex2f(-1.0f, -1.0f); // Bottom left
+	glVertex2f(1.0f, -1.0f); // Bottom right
+	glVertex2f(1.0f, -0.2f); // Top right
+	glVertex2f(-1.0f, -0.2f); // Top left
+	glEnd();
+}
+
+void drawWindMill() {
+	drawBackground();
+
+	glPushMatrix();
+		glTranslatef(-0.4f, 0.1f, 0.0f);
+		glScalef(0.8f, 0.6f, 1.0f);
+		drawMountain(0.4f, 0.3f, 0.2f);
+	glPopMatrix();
+
+	glPushMatrix();
+		glTranslatef(-0.8f, 0.0f, 0.0f);
+		glScalef(0.6f, 0.4f, 1.0f);
+		drawMountain(0.6f, 0.6f, 0.6f);
+	glPopMatrix();
+
+	glPushMatrix();
+		glTranslatef(-0.1f, 0.0f, 0.0f);
+		glScalef(0.6f, 0.4f, 1.0f);
+		drawMountain(0.4f, 0.5f, 0.3f);
+	glPopMatrix();
+
+
+	glPushMatrix();
+		glTranslatef(0.6f, 0.8f, 0.0f);
+		glScaled(0.5, 0.5, 1.0);
+		drawCloud();
+	glPopMatrix();
+
+	glPushMatrix();
+		glTranslatef(0.2f, 0.5f, 0.0f);
+		glScaled(0.5, 0.5, 1.0);
+		drawCloud();
+	glPopMatrix();
+
+
+	glPushMatrix();
+		glTranslatef(-0.4f, 0.8f, 0.0f);
+		glScaled(0.5, 0.5, 1.0);
+		drawCloud();
+	glPopMatrix();
+
+	glPushMatrix();
+		glTranslatef(-0.8f, 0.5f, 0.0f);
+		glScaled(0.5, 0.5, 1.0);
+		drawCloud();
+	glPopMatrix();
+
+	glPushMatrix();
+		drawBuilding();
+	glPopMatrix();
 }
 
 void display()
@@ -209,6 +446,7 @@ void display()
 			glPopMatrix();
 			break;
 		case 3:
+			glLoadIdentity();
 			drawWindMill();
 	}
 
