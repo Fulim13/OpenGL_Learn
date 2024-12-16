@@ -157,8 +157,56 @@ bool initPixelFormat(HDC hdc)
 }
 //--------------------------------------------------------------------
 
-void drawIceCream() {
+void drawSphere() {
+	sphere = gluNewQuadric();
+	//https://registry.khronos.org/OpenGL-Refpages/gl2.1/xhtml/gluQuadricDrawStyle.xml
+	gluQuadricDrawStyle(sphere, GLU_LINE);
+	glColor3f(0.0f, 0.0f, 1.0f);
+	gluSphere(sphere, 0.5, slices, stacks);
+}
 
+void drawCylinder() {
+	// Cylinder is not face on the middle, is face the front of the top part (the sharp part)
+	cylinder = gluNewQuadric();
+	gluQuadricDrawStyle(cylinder, GLU_LINE);
+	glColor3f(0.0f, 0.0f, 1.0f);
+	// gluCylinder(GLUquadric obj*, baseRadius, topRadius, height,slices, stacks);
+	// gluCylinder(cylinder, 0.2, 0.2, 0.6, slices, stacks);
+	gluCylinder(cylinder, 0.01, 0.4, 0.6, slices, stacks);
+}
+
+void drawIceCream() {
+	// choco
+	glPushMatrix();
+	sphere = gluNewQuadric();
+	glColor3f(.48f, .25f, .0f);
+	glTranslatef(.0f, .15f, .0f);
+
+	gluSphere(sphere, .38, 50, 25);
+	glPopMatrix();
+
+	// base cone
+	glPushMatrix();
+	cylinder = gluNewQuadric();
+	glColor3f(.82f, .49f, .18f);
+
+	glTranslatef(.0f, -1.2f, .0f);
+	glRotatef(-90.0f, 1.0f, .0f, .0f);
+
+	gluCylinder(cylinder, .0, .4, 1.3, 50, 50);
+	glPopMatrix();
+
+	// outline cone
+	glPushMatrix();
+	cylinder = gluNewQuadric();
+	gluQuadricDrawStyle(cylinder, GLU_LINE);
+	glColor3f(.43f, .15f, .05f);
+
+	glTranslatef(.0f, -1.2f, .0f);
+	glRotatef(-90.0f, 1.0f, .0f, .0f);
+
+	gluCylinder(cylinder, .0, .4, 1.3, 50, 50);
+	glPopMatrix();
 }
 
 void display()
@@ -174,13 +222,7 @@ void display()
 			glRotatef(cubeRotX, 1.0f, 0.0f, 0.0f);
 			glRotatef(cubeRotY, 0.0f, 1.0f, 0.0f);
 			glRotatef(cubeRotZ, 0.0f, 0.0f, 1.0f);
-
-			sphere = gluNewQuadric();
-			//https://registry.khronos.org/OpenGL-Refpages/gl2.1/xhtml/gluQuadricDrawStyle.xml
-			gluQuadricDrawStyle(sphere, GLU_LINE);
-			glColor3f(0.0f, 0.0f, 1.0f);
-			gluSphere(sphere, 0.5, slices, stacks);
-
+			drawSphere();
 			break;
 
 		// Cylinder
@@ -191,18 +233,17 @@ void display()
 			glRotatef(cubeRotX, 1.0f, 0.0f, 0.0f);
 			glRotatef(cubeRotY, 0.0f, 1.0f, 0.0f);
 			glRotatef(cubeRotZ, 0.0f, 0.0f, 1.0f);
-
-			// Cylinder is not face on the middle, is face the front of the top part (the sharp part)
-			cylinder = gluNewQuadric();
-			gluQuadricDrawStyle(cylinder, GLU_LINE);
-			glColor3f(0.0f, 0.0f, 1.0f);
-			// gluCylinder(GLUquadric obj*, baseRadius, topRadius, height,slices, stacks);
-			// gluCylinder(cylinder, 0.2, 0.2, 0.6, slices, stacks);
-			gluCylinder(cylinder, 0.01, 0.4, 0.6, slices, stacks);
-
+			drawCylinder();
 			break;
 		case 3:
+			glLoadIdentity();
+
+			glTranslatef(cubeX, cubeY, cubeZ);
+			glRotatef(cubeRotX, 1.0f, 0.0f, 0.0f);
+			glRotatef(cubeRotY, 0.0f, 1.0f, 0.0f);
+			glRotatef(cubeRotZ, 0.0f, 0.0f, 1.0f);
 			drawIceCream();
+			break;
 		}
 
 
