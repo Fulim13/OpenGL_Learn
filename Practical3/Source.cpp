@@ -2,6 +2,7 @@
 #include <Windows.h>
 #include <gl/GL.h>
 #include <math.h>
+#include <iostream>
 
 #pragma comment (lib, "OpenGL32.lib")
 
@@ -29,8 +30,11 @@ float x2 = 0.0, y2 = 0.0;					// Point on circle
 const double PI = 3.14159265;				// Value of PI
 float noOfTriangle = 30;					// Number of triangle to draw circle
 
-float spinnerAngle = 0.0f;
-
+// Spinner Properties
+float spinnerAngle = 0.0f; // Angle of rotation
+float rotationSpeed = 0.05f; // Speed of rotation
+int numAngles = 3;	// Number of angles to draw
+float rotationAngles[8]; // Array to store rotation angles
 
 LRESULT WINAPI WindowProcedure(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
@@ -118,14 +122,29 @@ LRESULT WINAPI WindowProcedure(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam
 				break;
 
 			case 'Z':
-				spinnerAngle += 1.0f;
+				if (rotationSpeed < 0.2f) {
+					rotationSpeed += 0.05f;
+				}
 				break;
+
 			case 'X':
-				spinnerAngle -= 1.0f;
+				if (rotationSpeed > 0.0f) {
+					rotationSpeed -= 0.05f;
+				}
 				break;
+				
 			case 'C':
-				spinnerAngle = 0.0f;
+				if (numAngles < 8) {
+					numAngles += 1;
+				}
 				break;
+				
+			case 'V':
+				if (numAngles > 3) {  
+					numAngles -= 1;
+				}
+				break;
+				
 		}
 		break;
 
@@ -181,6 +200,32 @@ void drawCircle(){
 	glEnd();
 }
 
+// Function to draw a circle (used for the sun)
+void drawCircle(float x, float y, float radius, int num_segments) {
+	glBegin(GL_POLYGON);
+	for (int i = 0; i < num_segments; ++i) {
+		float theta = 2 * PI * float(i) / float(num_segments);
+		float dx = radius * cosf(theta); // X coordinate
+		float dy = radius * sinf(theta); // Y coordinate
+		glVertex2f(x + dx, y + dy); // Specify the vertex for the circle
+	}
+	glEnd();
+}
+
+// Function to draw the rays of the sun
+void drawSunRays(float x, float y, float radius, int num_rays) {
+	for (int i = 0; i < num_rays; ++i) {
+		float angle = 2 * PI * float(i) / float(num_rays);
+		float x_end = x + (radius + 0.2f) * cosf(angle);  // End position of ray
+		float y_end = y + (radius + 0.2f) * sinf(angle);  // End position of ray
+
+		glBegin(GL_LINES);
+		glVertex2f(x, y);    // Start at the center of the sun
+		glVertex2f(x_end, y_end); // End at the ray endpoint
+		glEnd();
+	}
+}
+
 void drawCloud() {
 	glPushMatrix();
 		glTranslatef(0.2f, 0.0f, 0.0f);
@@ -234,6 +279,8 @@ void drawCloud() {
 		drawCircle();
 	glPopMatrix();
 
+
+
 }
 
 void drawTriangle(float r, float g, float b) {
@@ -245,76 +292,135 @@ void drawTriangle(float r, float g, float b) {
 	glEnd();
 }
 
-void drawBuilding() {
-	glColor3f(.95f, .82f, .74f);
-
-	glBegin(GL_QUADS);
-	glVertex2f(-.1, .3f);
-	glVertex2f(.1f, .3f);
-	glVertex2f(.25f, -.7f);
-	glVertex2f(-.25f, -.7f);
-	glEnd();
-
-	glPushMatrix();
-	glRotatef(spinnerAngle, 0.0f, 0.0f, 1.0f); // Rotate the spinner
-	glColor3f(0.72f, 0.45f, 0.2f);
-	
-
-	glPushMatrix();
-		glTranslatef(-.1f, .0f, .0f);
-		glRotatef(-45.0f, .0f, .0f, 1.0f);
-		glBegin(GL_QUADS);
-		glVertex2f(-0.75f, 0.3f);
-		glVertex2f(0.55f, 0.3f);
-		glVertex2f(0.55f, 0.2f);
-		glVertex2f(-0.75f, 0.2f);
-		glEnd();
-	glPopMatrix();
-
-	glPushMatrix();
-		glTranslatef(.1f, .0f, .0f);
-		glRotatef(45.0f, .0f, .0f, 1.0f);
-		glBegin(GL_QUADS);
-		glVertex2f(-0.55f, 0.3f);
-		glVertex2f(0.75f, 0.3f);
-		glVertex2f(0.75f, 0.2f);
-		glVertex2f(-0.55f, 0.2f);
-		glEnd();
-	glPopMatrix();
-
-	glPushMatrix();
-		glBegin(GL_QUADS);
-		glVertex2f(-0.65f, 0.3f);
-		glVertex2f(0.65f, 0.3f);
-		glVertex2f(0.65f, 0.2f);
-		glVertex2f(-0.65f, 0.2f);
-		glEnd();
-	glPopMatrix();
-
-	glPushMatrix();
-		glTranslatef(.25f, .2f, .0f);
-		glRotatef(90.0f, .0f, .0f, 1.0f);
-		glBegin(GL_QUADS);
-		glVertex2f(-0.65f, 0.3f);
-		glVertex2f(0.65f, 0.3f);
-		glVertex2f(0.65f, 0.2f);
-		glVertex2f(-0.65f, 0.2f);
-		glEnd();
-	glPopMatrix();
-
-	glPopMatrix();
-
-}
-
-
-
 void drawMountain(float r, float g, float b) {
 	drawTriangle(r, g, b);
 }
 
+void drawTree() {
+	// Draw trunk (1 quadrilateral)
+	glPushMatrix();
+	glColor3f(0.6f, 0.3f, 0.1f); // Brown trunk color
+	glBegin(GL_QUADS);
+	glVertex2f(-0.1f, -0.6f); // Bottom-left corner
+	glVertex2f(0.1f, -0.6f);  // Bottom-right corner
+	glVertex2f(0.1f, -2.0f);  // Top-right corner
+	glVertex2f(-0.1f, -2.0f); // Top-left corner
+	glEnd();
+	glPopMatrix();
 
-void drawSun() {
+	// Draw foliage (3 triangles)
+	glPushMatrix();
+	drawTriangle(0.0f, 0.5f, 0.0f); // Darker green triangle 1 (top foliage)
+	glTranslatef(0.0f, -0.6f, 0.0f); // Move down
+	drawTriangle(0.0f, 0.5f, 0.0f); // Darker green triangle 2 (middle foliage)
+	glTranslatef(0.0f, -0.6f, 0.0f); // Move down again
+	drawTriangle(0.0f, 0.5f, 0.0f); // Darker green triangle 3 (bottom foliage)
+	glPopMatrix();
+}
 
+void drawGrid() {
+	int rows = 4;   // Number of rows
+	int cols = 10;   // Number of columns
+	float width = 0.3f;  // Width of the outer quad
+	float height = 0.15f; // Height of the outer quad
+
+	float cellWidth = width / cols;     // Width of each small quad
+	float cellHeight = height / rows;   // Height of each small quad
+
+
+	// Draw the outer quad
+	glLineWidth(1.0f);
+	glBegin(GL_LINE_LOOP);
+	glVertex2f(-width / 2, height / 2);  // Top-left
+	glVertex2f(width / 2, height / 2);   // Top-right
+	glVertex2f(width / 2, -height / 2);  // Bottom-right
+	glVertex2f(-width / 2, -height / 2); // Bottom-left
+	glEnd();
+
+	// Draw the smaller quads inside
+	for (int i = 0; i < rows; i++) {
+		for (int j = 0; j < cols; j++) {
+			float xStart = -width / 2 + j * cellWidth;
+			float yStart = height / 2 - i * cellHeight;
+
+			glBegin(GL_LINE_LOOP);
+			glVertex2f(xStart, yStart);                        // Top-left
+			glVertex2f(xStart + cellWidth, yStart);            // Top-right
+			glVertex2f(xStart + cellWidth, yStart - cellHeight); // Bottom-right
+			glVertex2f(xStart, yStart - cellHeight);           // Bottom-left
+			glEnd();
+		}
+	}
+}
+
+void drawSpinner() {
+	spinnerAngle += rotationSpeed;  // Increment the spinner angle by the rotation speed
+
+	glPushMatrix();
+
+	glRotatef(spinnerAngle, 0.0f, 0.0f, 1.0f); // Rotate the spinner
+
+	// Calculate the angle gap based on the number of angles
+	float angleGap = 360.0f / numAngles;
+
+	// Populate rotationAngles array with evenly spaced angles
+	for (int i = 0; i < numAngles; ++i) {
+		rotationAngles[i] = i * angleGap;
+	}
+
+
+
+	for (int i = 0; i < numAngles; ++i) {
+		glLineWidth(3.0f);
+		glColor3f(0.4f, 0.2f, 0.1f);
+		glPushMatrix();
+		// Apply rotation
+		glRotatef(rotationAngles[i], 0.0f, 0.0f, 1.0f);
+
+		// Draw a line
+		glBegin(GL_LINES);
+		glVertex2f(0.0f, 0.0f);
+		glVertex2f(0.5f, 0.0f);
+		glEnd();
+
+		// Translate and draw the grid
+		glPushMatrix();
+		glTranslatef(0.35f, -0.075f, 0.0f);
+		drawGrid();
+		glPopMatrix();
+		glPopMatrix();
+	}
+
+	glPopMatrix();
+}
+
+void drawBuilding() {
+	glColor3f(.95f, .82f, .74f);
+
+	glBegin(GL_QUADS);
+	glVertex2f(-.1, .1f);
+	glVertex2f(.1f, .1f);
+	glVertex2f(.25f, -.9f);
+	glVertex2f(-.25f, -.9f);
+	glEnd();
+
+	glColor3f(0.4f, 0.2f, 0.1f);
+	glBegin(GL_QUADS);
+		glVertex2f(-.05f, -.6f);
+		glVertex2f(.05f, -.6f);
+		glVertex2f(.15f, -.9f);
+		glVertex2f(-.15f, -.9f);
+	glEnd();
+
+	drawCircle(0.0f, 0.0f, 0.02f, 50);
+
+	glPushMatrix();
+		glColor3f(1.0f, 1.0f, 0.0f);
+		glTranslatef(-0.045f, -.75f, 0.0f);
+		drawCircle(0.0f, 0.0f, 0.02f, 50);
+	glPopMatrix();
+
+	drawSpinner();
 }
 
 void drawBackground() {
@@ -328,7 +434,7 @@ void drawBackground() {
 	glEnd();
 
 	// Draw the green ground
-	glColor3f(0.0f, 0.6f, 0.0f); // Green color
+	glColor3f(0.3f, 0.8f, 0.3f); // Green color for the ground
 	glBegin(GL_QUADS);
 	glVertex2f(-1.0f, -1.0f); // Bottom left
 	glVertex2f(1.0f, -1.0f); // Bottom right
@@ -358,6 +464,29 @@ void drawWindMill() {
 		drawMountain(0.4f, 0.5f, 0.3f);
 	glPopMatrix();
 
+	glPushMatrix();
+		glTranslatef(0.9f, 0.0f, 0.0f);
+		glScalef(0.2f, 0.1f, 1.0f);
+		drawTree();
+	glPopMatrix();
+
+	glPushMatrix();
+		glTranslatef(0.70f, 0.0f, 0.0f);
+		glScalef(0.2f, 0.1f, 1.0f);
+		drawTree();
+	glPopMatrix();
+
+	glPushMatrix();
+		glTranslatef(0.2f, 0.6f, 0.0f);
+		glScaled(0.5, 0.5, 1.0);
+		// Draw the sun (a circle at the center)
+		glColor3f(1.0f, 1.0f, 0.0f); // Yellow color for the sun
+		drawCircle(0.0f, 0.0f, 0.2f, 50);  // Draw sun's circle
+
+		// Draw the rays of the sun
+		glColor3f(1.0f, 0.7f, 0.0f); // Orange color for the rays
+		drawSunRays(0.0f, 0.0f, 0.2f, 12);  // Draw sun rays (12 rays)
+	glPopMatrix();
 
 	glPushMatrix();
 		glTranslatef(0.6f, 0.8f, 0.0f);
@@ -370,7 +499,6 @@ void drawWindMill() {
 		glScaled(0.5, 0.5, 1.0);
 		drawCloud();
 	glPopMatrix();
-
 
 	glPushMatrix();
 		glTranslatef(-0.4f, 0.8f, 0.0f);
@@ -449,9 +577,6 @@ void display()
 			glLoadIdentity();
 			drawWindMill();
 	}
-
-
-
 }
 //--------------------------------------------------------------------
 
@@ -469,7 +594,7 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE, LPSTR, int nCmdShow)
 	if (!RegisterClassEx(&wc)) return false;
 
 	HWND hWnd = CreateWindow(WINDOW_TITLE, WINDOW_TITLE, WS_OVERLAPPEDWINDOW,
-		CW_USEDEFAULT, CW_USEDEFAULT, 800, 600,
+		CW_USEDEFAULT, CW_USEDEFAULT, 800, 800,
 		NULL, NULL, wc.hInstance, NULL);
 
 	//--------------------------------
