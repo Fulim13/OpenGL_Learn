@@ -312,30 +312,47 @@ void pyramid() {
 
 void display()
 {
-	// Modify Camera
-	glMatrixMode(GL_PROJECTION); // switch matrix state to modify camera
-	glLoadIdentity(); // reset the matrix
-	// glOrtho(cameraLeft, cameraRight, cameraBottom, cameraTop, cameraNear, cameraFar); // apply new matrix
-
-	// field of view (fov - y-axis) - how wide between top and bottom (height)
-	// game usually is fov x-axis , you can see move and backward, EG: shooting game
-	// gluPerspective(fovy, aspect, near, far);
-	gluPerspective(30, 1, 0.3, 10.0f); //800 pixel / 800 pixel = 1 ratio
-
-	// translate only affect the projection, not the model
-	glTranslatef(cameraX, cameraY, cameraZ);
-
-	glMatrixMode(GL_MODELVIEW); // switch matrix state to modify object
-
-	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	
 
 	switch (questionToShow) {
 	case 1:
+		// Modify Camera
+		glMatrixMode(GL_PROJECTION); // switch matrix state to modify camera
+		glLoadIdentity(); // reset the matrix
+		// glOrtho(cameraLeft, cameraRight, cameraBottom, cameraTop, cameraNear, cameraFar); // apply new matrix
+
+		// field of view (fov - y-axis) - how wide between top and bottom (height)
+		// game usually is fov x-axis , you can see move and backward, EG: shooting game
+		// gluPerspective(fovy, aspect, near, far);
+		gluPerspective(30, 1, 0.3, 10.0f); //800 pixel / 800 pixel = 1 ratio
+
+		// translate only affect the projection, not the model
+		glTranslatef(cameraX, cameraY, cameraZ);
+
+		glMatrixMode(GL_MODELVIEW); // switch matrix state to modify object
+
+		glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+
 		glLoadIdentity();
 		cube();
 		break;
 	case 2:
+		// Modify Camera (Fixed Camera)
+		glMatrixMode(GL_PROJECTION);
+		glLoadIdentity();
+		// glOrtho(left, right, bottom, top, near, far);
+		// since the near is 0, and the object is also in z = 0 , we are inside the object, so the object size cut down by 2
+		// glOrtho(-5, 5, -5, 5, -1, 10); 
+		//
+		glOrtho(cameraLeft, cameraRight, cameraBottom, cameraTop, cameraNear, cameraFar);
+
+
+		glMatrixMode(GL_MODELVIEW);
+		glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
 		glLoadIdentity();
 		pyramid();
 		break;
@@ -377,14 +394,6 @@ int main(HINSTANCE hInst, HINSTANCE, LPSTR, int nCmdShow)
 	// Enable 3D Depth Test
 	glEnable(GL_DEPTH_TEST);
 
-	// Modify Camera (Fixed Camera)
-	//glMatrixMode(GL_PROJECTION);
-	//glLoadIdentity();
-	// glOrtho(left, right, bottom, top, near, far);
-	// since the near is 0, and the object is also in z = 0 , we are inside the object, so the object size cut down by 2
-	// glOrtho(-5, 5, -5, 5, -1, 10); 
-	//
-	//glOrtho(cameraLeft, cameraRight, cameraBottom, cameraTop, cameraNear, cameraFar);
 
 	//--------------------------------
 	//	End initialization
