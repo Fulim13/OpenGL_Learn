@@ -134,7 +134,6 @@
     <Image Include="brick.bmp" />
     <Image Include="cloud.bmp" />
     <Image Include="iron.bmp" />
-    <Image Include="metal10.jpg" />
     <Image Include="road.bmp" />
     <Image Include="roof.bmp" />
     <Image Include="sea.bmp" />

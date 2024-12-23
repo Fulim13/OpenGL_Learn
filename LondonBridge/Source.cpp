@@ -614,7 +614,9 @@ void display()
 	glPushMatrix();
 	glTranslatef(0.45, 0.15, 0.02);
 	glRotatef(-45, 0.0, 0.0, 1.0);
+	textureArr[5] = loadTexture("steelbar.bmp");
 	drawCylinder(0.015, 0.015, 0.6, 20, 20);
+	glDeleteTextures(1, &textureArr[5]);
 	glPopMatrix();
 
 	// Left bridge front holder - black
