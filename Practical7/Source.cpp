@@ -49,6 +49,9 @@ GLuint texture = 0;	// Texture Name
 BITMAP BMP;			// Bitmap Structure
 HBITMAP hBMP = NULL;	// Handle to Bitmap
 
+GLuint textures[3]; // Array to store texture IDs
+int currentTextureIndex = 0;
+
 LRESULT WINAPI WindowProcedure(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
 	switch (msg)
@@ -160,6 +163,16 @@ LRESULT WINAPI WindowProcedure(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam
 		case 0x34:	// 4 key is pressed
 			questionToShow = 4;
 			break;
+
+		case 'W': 
+			currentTextureIndex = 0;
+			break;
+		case 'E':
+			currentTextureIndex = 1;
+			break;
+		case 'R':
+			currentTextureIndex = 2;
+			break;
 		}
 		break;
 
@@ -216,20 +229,20 @@ void cube() {
 	glRotatef(cubeRotZ, 0.0f, 0.0f, 1.0f);
 
 	glBegin(GL_QUADS); // front
-	glColor3f(1, 0, 0); // red
+	//glColor3f(1, 0, 0); // red
 	glTexCoord2f(0.0f, 1.0f);
 	glVertex3f(-0.5f, 0.5f, -0.5f);
-	glTexCoord2f(0.0f, 0.5f);
+	glTexCoord2f(0.0f, 0.0f);
 	glVertex3f(-0.5f, -0.5f, -0.5f);
-	glTexCoord2f(0.5f, 0.5f);
+	glTexCoord2f(1.0f, 0.0f);
 	glVertex3f(0.5f, -0.5f, -0.5f);
-	glTexCoord2f(0.5f, 1.0f);
+	glTexCoord2f(1.0f, 1.0f);
 	glVertex3f(0.5f, 0.5f, -0.5f);
 	glEnd();
 
 
 	glBegin(GL_QUADS); // right
-	glColor3f(0, 1, 0); //green
+	//glColor3f(0, 1, 0); //green
 	glTexCoord2f(0.0f, 1.0f);
 	glVertex3f(0.5f, 0.5f, 0.5f);
 	glTexCoord2f(0.0f, 0.0f);
@@ -241,7 +254,7 @@ void cube() {
 	glEnd();
 
 	glBegin(GL_QUADS); // back
-	glColor3f(0, 0, 1); //blue
+	//glColor3f(0, 0, 1); //blue
 	glTexCoord2f(0.0f, 1.0f);
 	glVertex3f(0.5f, 0.5f, 0.5f);
 	glTexCoord2f(0.0f, 0.0f);
@@ -253,7 +266,7 @@ void cube() {
 	glEnd();
 
 	glBegin(GL_QUADS); // left
-	glColor3f(1, 0, 1); // purple
+	//glColor3f(1, 0, 1); // purple
 	glTexCoord2f(0.0f, 1.0f);
 	glVertex3f(-0.5f, -0.5f, -0.5f);
 	glTexCoord2f(0.0f, 0.0f);
@@ -265,7 +278,7 @@ void cube() {
 	glEnd();
 
 	glBegin(GL_QUADS); // top
-	glColor3f(1, 1, 0); // yellow
+	//glColor3f(1, 1, 0); // yellow
 	glTexCoord2f(0.0f, 1.0f);
 	glVertex3f(-0.5f, 0.5f, 0.5f);
 	glTexCoord2f(0.0f, 0.0f);
@@ -277,7 +290,7 @@ void cube() {
 	glEnd();
 
 	glBegin(GL_QUADS); // bottom
-	glColor3f(0, 1, 1); // cyan
+	//glColor3f(0, 1, 1); // cyan
 	glTexCoord2f(0.0f, 1.0f);
 	glVertex3f(0.5f, -0.5f, 0.5f);
 	glTexCoord2f(0.0f, 0.0f);
@@ -295,48 +308,52 @@ void pyramid() {
 	glRotatef(cubeRotY, 0.0f, 1.0f, 0.0f);
 	glRotatef(cubeRotZ, 0.0f, 0.0f, 1.0f);
 
-	glBegin(GL_LINE_LOOP); //back
-	glColor3f(1, 1, 1); //white
-	//glColor3f(0, 0, 1); //blue
-	glVertex3f(-0.5f, -0.5f, 0.5f);
-	glVertex3f(0.5f, -0.5f, 0.5f);
-	glVertex3f(0.0f, 0.0f, 0.0f);
+	// Back face
+	glBegin(GL_POLYGON);
+	glColor3f(1, 1, 1); // White to avoid color interfering with the texture
+	glTexCoord2f(0.0f, 0.0f); glVertex3f(-0.5f, -0.5f, 0.5f);
+	glTexCoord2f(1.0f, 0.0f); glVertex3f(0.5f, -0.5f, 0.5f);
+	glTexCoord2f(0.5f, 1.0f); glVertex3f(0.0f, 0.0f, 0.0f);
 	glEnd();
 
-	glBegin(GL_LINE_LOOP); //front
-	//glColor3f(1, 1, 0); //yellow
-	glVertex3f(-0.5f, -0.5f, -0.5f);
-	glVertex3f(0.5f, -0.5f, -0.5f);
-	glVertex3f(0.0f, 0.0f, 0.0f);
+	// Front face
+	glBegin(GL_POLYGON);
+	glColor3f(1, 1, 1);
+	glTexCoord2f(0.0f, 0.0f); glVertex3f(-0.5f, -0.5f, -0.5f);
+	glTexCoord2f(1.0f, 0.0f); glVertex3f(0.5f, -0.5f, -0.5f);
+	glTexCoord2f(0.5f, 1.0f); glVertex3f(0.0f, 0.0f, 0.0f);
 	glEnd();
 
-	glBegin(GL_LINE_LOOP); //left
-	//glColor3f(1, 0, 0); //red
-	glVertex3f(-0.5f, -0.5f, -0.5f);
-	glVertex3f(-0.5f, -0.5f, 0.5f);
-	glVertex3f(0.0f, 0.0f, 0.0f);
+	// Left face
+	glBegin(GL_POLYGON);
+	glColor3f(1, 1, 1);
+	glTexCoord2f(0.0f, 0.0f); glVertex3f(-0.5f, -0.5f, -0.5f);
+	glTexCoord2f(1.0f, 0.0f); glVertex3f(-0.5f, -0.5f, 0.5f);
+	glTexCoord2f(0.5f, 1.0f); glVertex3f(0.0f, 0.0f, 0.0f);
 	glEnd();
 
-	glBegin(GL_LINE_LOOP); //right
-	//glColor3f(0, 1, 0); //green
-	glVertex3f(0.5f, -0.5f, -0.5f);
-	glVertex3f(0.5f, -0.5f, 0.5f);
-	glVertex3f(0.0f, 0.0f, 0.0f);
+	// Right face
+	glBegin(GL_POLYGON);
+	glColor3f(1, 1, 1);
+	glTexCoord2f(0.0f, 0.0f); glVertex3f(0.5f, -0.5f, -0.5f);
+	glTexCoord2f(1.0f, 0.0f); glVertex3f(0.5f, -0.5f, 0.5f);
+	glTexCoord2f(0.5f, 1.0f); glVertex3f(0.0f, 0.0f, 0.0f);
 	glEnd();
 
-	glBegin(GL_LINE_LOOP); // bottom
-	//glColor3f(0, 1, 1); // cyan
-	glVertex3f(0.5f, -0.5f, 0.5f);
-	glVertex3f(-0.5f, -0.5f, 0.5f);
-	glVertex3f(-0.5f, -0.5f, -0.5f);
-	glVertex3f(0.5f, -0.5f, -0.5f);
+	// Bottom face
+	glBegin(GL_POLYGON);
+	glColor3f(1, 1, 1);
+	glTexCoord2f(0.0f, 0.0f); glVertex3f(0.5f, -0.5f, 0.5f);
+	glTexCoord2f(1.0f, 0.0f); glVertex3f(-0.5f, -0.5f, 0.5f);
+	glTexCoord2f(1.0f, 1.0f); glVertex3f(-0.5f, -0.5f, -0.5f);
+	glTexCoord2f(0.0f, 1.0f); glVertex3f(0.5f, -0.5f, -0.5f);
 	glEnd();
+
 }
 
 void display()
 {
-	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	
 
 	// Modify Camera
 	//glMatrixMode(GL_PROJECTION); 
@@ -371,11 +388,17 @@ void display()
 
 	switch (questionToShow) {
 	case 1:
+		glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		glLoadIdentity();
+		glBindTexture(GL_TEXTURE_2D, textures[currentTextureIndex]);
 		cube();
 		break;
 	case 2:
+		glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		glLoadIdentity();
+		glBindTexture(GL_TEXTURE_2D, textures[2]);
 		pyramid();
 		break;
 	}
@@ -383,21 +406,31 @@ void display()
 
 
 void InitializeTextures() {
-	glPixelStorei(GL_UNPACK_ALIGNMENT, 4);
-	HBITMAP hBMP = (HBITMAP)LoadImage(GetModuleHandle(NULL),
-		"Box.bmp", IMAGE_BITMAP, 0, 0, LR_CREATEDIBSECTION |
-		LR_LOADFROMFILE);
-	GetObject(hBMP, sizeof(BMP), &BMP);
+	const char* textureFiles[] = { "Box.bmp", "iron.bmp", "brick.bmp" };
+	int numTextures = sizeof(textureFiles) / sizeof(textureFiles[0]);
+
+	glGenTextures(numTextures, textures);
+
+	for (int i = 0; i < numTextures; i++) {
+		HBITMAP hBMP = (HBITMAP)LoadImage(GetModuleHandle(NULL),
+			textureFiles[i], IMAGE_BITMAP, 0, 0, LR_CREATEDIBSECTION | LR_LOADFROMFILE);
+
+		if (!hBMP) {
+			MessageBox(NULL, "Failed to load texture!", "Error", MB_OK);
+			exit(1);
+		}
+
+		GetObject(hBMP, sizeof(BMP), &BMP);
+
+		glBindTexture(GL_TEXTURE_2D, textures[i]);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, BMP.bmWidth, BMP.bmHeight, 0, GL_BGR_EXT, GL_UNSIGNED_BYTE, BMP.bmBits);
+
+		DeleteObject(hBMP); // Clean up the bitmap object after loading
+	}
 
 	glEnable(GL_TEXTURE_2D);
-	glGenTextures(1, &texture);
-	glBindTexture(GL_TEXTURE_2D, texture);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER,
-		GL_LINEAR);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER,
-		GL_LINEAR);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, BMP.bmWidth,
-		BMP.bmHeight, 0, GL_BGR_EXT, GL_UNSIGNED_BYTE, BMP.bmBits);
 }
 
 void CleanUpTextures() {

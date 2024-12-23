@@ -273,8 +273,14 @@ void display()
 			glRotatef(-20, 1.0, 0.0, 0.0);
 
 			glPushMatrix();
-			speed = speed + 0.05;
-			glRotatef(speed, 0.0, 1.0, 0.0);
+
+			// Automatically rotate
+			//speed = speed + 0.05;
+			//glRotatef(speed, 0.0, 1.0, 0.0);
+
+			glRotatef(cubeRotX, 1.0f, 0.0f, 0.0f);
+			glRotatef(cubeRotY, 0.0f, 1.0f, 0.0f);
+			glRotatef(cubeRotZ, 0.0f, 0.0f, 1.0f);
 
 			glPushMatrix();
 			drawCorn(0.2, 0.0, 0.8);
