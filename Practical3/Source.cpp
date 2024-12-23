@@ -21,7 +21,7 @@ float quadPosZ2 = 0.0f;
 float quadPosX3 = 0.0f;
 float quadPosY3 = 0.0f;
 float quadPosZ3 = 0.0f;
-int questionToShow = 3;
+int questionToShow = 1;
 
 float x = 0.0, y = 0.0;						// Origin of circle
 float radius = 0.2;							// Radius of circle
@@ -32,7 +32,9 @@ float noOfTriangle = 30;					// Number of triangle to draw circle
 
 // Spinner Properties
 float spinnerAngle = 0.0f; // Angle of rotation
-float rotationSpeed = 0.05f; // Speed of rotation
+float rotationSpeed = 0.1f; // Speed of rotation
+bool reverseRotation = false; // Toggle for rotation direction
+bool isSpinning = true; // Toggle for spinning state
 int numAngles = 3;	// Number of angles to draw
 float rotationAngles[8]; // Array to store rotation angles
 
@@ -121,16 +123,20 @@ LRESULT WINAPI WindowProcedure(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam
 				quadPosZ = 0.0f;
 				break;
 
-			case 'Z':
-				if (rotationSpeed < 0.2f) {
-					rotationSpeed += 0.05f;
-				}
+			case 'T': // Toggle rotation direction
+				reverseRotation = !reverseRotation;
 				break;
 
-			case 'X':
-				if (rotationSpeed > 0.0f) {
-					rotationSpeed -= 0.05f;
-				}
+			case 'P': // Toggle spinning on/off
+				isSpinning = !isSpinning;
+				break;
+
+			case 'Z': // Increase rotation speed
+				rotationSpeed += 0.1f;
+				break;
+
+			case 'X': // Decrease rotation speed
+				rotationSpeed -= 0.1f;
 				break;
 				
 			case 'C':
@@ -144,6 +150,7 @@ LRESULT WINAPI WindowProcedure(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam
 					numAngles -= 1;
 				}
 				break;
+
 				
 		}
 		break;
@@ -354,7 +361,15 @@ void drawGrid() {
 }
 
 void drawSpinner() {
-	spinnerAngle += rotationSpeed;  // Increment the spinner angle by the rotation speed
+	if (isSpinning) {
+		// Adjust rotation angle based on direction
+		if (reverseRotation) {
+			spinnerAngle -= rotationSpeed; // Reverse direction
+		}
+		else {
+			spinnerAngle += rotationSpeed; // Forward direction
+		}
+	}
 
 	glPushMatrix();
 
@@ -368,13 +383,13 @@ void drawSpinner() {
 		rotationAngles[i] = i * angleGap;
 	}
 
-
-
+	// Draw spinner arms
 	for (int i = 0; i < numAngles; ++i) {
 		glLineWidth(3.0f);
 		glColor3f(0.4f, 0.2f, 0.1f);
 		glPushMatrix();
-		// Apply rotation
+
+		// Apply rotation for each arm
 		glRotatef(rotationAngles[i], 0.0f, 0.0f, 1.0f);
 
 		// Draw a line
