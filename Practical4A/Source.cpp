@@ -60,6 +60,11 @@ LRESULT WINAPI WindowProcedure(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam
 				case 'S':
 					lowerArmRotateZ -= rotationSpeed;
 					break;
+				case VK_SPACE: // Reset arm to initial stage
+					upperArmRotateZ = 0.0f;
+					lowerArmRotateZ = 0.0f;
+					wholeArmRotateZ = 0.0f;
+					break;
 
 				case VK_NUMPAD8:
 					cubeZ += movementSpeed;
