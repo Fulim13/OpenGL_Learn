@@ -70,3 +70,6 @@ desktop.ini
 *.swp
 *.class
 *.pyc
+
+# Own
+Robot/
