@@ -116,9 +116,6 @@ LRESULT WINAPI WindowProcedure(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam
 		case 0x33:	// 3 key is pressed
 			questionToShow = 3;
 			break;
-		case 0x34:	// 4 key is pressed
-			questionToShow = 4;
-			break;
 		}
 		break;
 
@@ -180,40 +177,6 @@ void drawCylinder() {
 	gluCylinder(cylinder, 0.01, 0.4, 0.6, slices, stacks);
 }
 
-void drawIceCream() {
-	// choco
-	glPushMatrix();
-	sphere = gluNewQuadric();
-	glColor3f(.48f, .25f, .0f);
-	glTranslatef(.0f, .15f, .0f);
-
-	gluSphere(sphere, .38, 50, 25);
-	glPopMatrix();
-
-	// base cone
-	glPushMatrix();
-	cylinder = gluNewQuadric();
-	glColor3f(.82f, .49f, .18f);
-
-	glTranslatef(.0f, -1.2f, .0f);
-	glRotatef(-90.0f, 1.0f, .0f, .0f);
-
-	gluCylinder(cylinder, .0, .4, 1.3, 50, 50);
-	glPopMatrix();
-
-	// outline cone
-	glPushMatrix();
-	cylinder = gluNewQuadric();
-	gluQuadricDrawStyle(cylinder, GLU_LINE);
-	glColor3f(.43f, .15f, .05f);
-
-	glTranslatef(.0f, -1.2f, .0f);
-	glRotatef(-90.0f, 1.0f, .0f, .0f);
-
-	gluCylinder(cylinder, .0, .4, 1.3, 50, 50);
-	glPopMatrix();
-}
-
 void drawCream(double r) {
 	GLUquadricObj* sphere = NULL;
 	sphere = gluNewQuadric();
@@ -222,6 +185,18 @@ void drawCream(double r) {
 	gluQuadricTexture(sphere, true);
 	gluSphere(sphere, r, 30, 30);
 	gluDeleteQuadric(sphere);
+}
+
+void drawCornOutline(double tr, double br, double h) {
+	glPushMatrix();
+	glRotatef(90, 1.0, 0.0, 0.0); // Align cone with the Z-axis
+	GLUquadricObj* cylinder = NULL;
+	cylinder = gluNewQuadric();
+	glColor3f(.62f, .39f, .10f);
+	gluQuadricDrawStyle(cylinder, GLU_LINE); // Set draw style to outline
+	gluCylinder(cylinder, tr, br, h, 35, 35); // Draw the outline cone
+	gluDeleteQuadric(cylinder); // Clean up
+	glPopMatrix();
 }
 
 void drawCorn(double tr, double br, double h) {
@@ -249,7 +224,7 @@ void drawBiskut(double tr, double br, double h) {
 void drawCherry(double r) {
 	GLUquadricObj* sphere = NULL;
 	sphere = gluNewQuadric();
-	glColor3f(1.0f, 0.0f, 0.0f);
+	glColor3f(0.8235, 0.0392, 0.1804);
 	gluQuadricDrawStyle(sphere, GLU_FILL);
 	gluQuadricTexture(sphere, true);
 	gluSphere(sphere, r, 10, 10);
@@ -293,15 +268,6 @@ void display()
 			drawCylinder();
 			break;
 		case 3:
-			glLoadIdentity();
-
-			glTranslatef(cubeX, cubeY, cubeZ);
-			glRotatef(cubeRotX, 1.0f, 0.0f, 0.0f);
-			glRotatef(cubeRotY, 0.0f, 1.0f, 0.0f);
-			glRotatef(cubeRotZ, 0.0f, 0.0f, 1.0f);
-			drawIceCream();
-			break;
-		case 4:
 			glPushMatrix();
 			glLoadIdentity();
 			glRotatef(-20, 1.0, 0.0, 0.0);
@@ -312,6 +278,10 @@ void display()
 
 			glPushMatrix();
 			drawCorn(0.2, 0.0, 0.8);
+			glPushMatrix();
+				glRotatef(-90, 1.0, 0.0, 0.0);
+				drawCornOutline(0.2, 0.0, 0.8);
+			glPopMatrix();
 			glPopMatrix();
 
 			glPushMatrix();
@@ -324,27 +294,22 @@ void display()
 			glPopMatrix();
 
 			glPushMatrix();
-			glTranslatef(0.0, 0.5, 0.0);
-			drawCream(0.18);
-			glPopMatrix();
-
-			glPushMatrix();
-			glTranslatef(0.1, 0.8, 0.0);
+			glTranslatef(0.1, 0.55, 0.0);
 			drawBiskut(0.02, 0.02, 0.4);
 			glPopMatrix();
 
 			glPushMatrix();
-			glTranslatef(0.13, 0.83, 0.0);
+			glTranslatef(0.13, 0.58, 0.0);
 			drawBiskut(0.02, 0.02, 0.4);
 			glPopMatrix();
 
 			glPushMatrix();
-			glTranslatef(-0.08, 0.68, 0.0);
+			glTranslatef(-0.08, 0.43, 0.0);
 			drawCherry(0.06);
 			glPopMatrix();
 
 			glPushMatrix();
-			glTranslatef(-0.08, 0.8, 0.0);
+			glTranslatef(-0.08, 0.55, 0.0);
 			drawcherryStick(0.005, 0.005, 0.3);
 			glPopMatrix();
 
