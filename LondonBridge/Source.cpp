@@ -15,7 +15,7 @@ float speed = 0.0, bspeed = 0.0;
 float tx = 0, tz = -3, tSpeed = 0.1; // Translate for modelview (x and z axis movement for camera)
 float ty = 0, ySpeed = 0.1;           // Camera up/down movement (y axis)
 float cameraSpeed = 0.1;              // General camera movement speed
-float cameraAngleX = 0, cameraAngleY = 0;  // Camera rotation (X and Y axis rotation)
+float cameraAngleX = 0, cameraAngleY = 0, cameraAngleZ = 0;  // Camera rotation (X and Y axis rotation)
 float ONear = 1, OFar = 20;         // Ortho near far
 float PNear = 1, PFar = 30;           // Perspective near far
 boolean isOrtho = true;               // Is ortho view flag
@@ -23,6 +23,12 @@ boolean isOrtho = true;               // Is ortho view flag
 //texture
 BITMAP BMP;
 HBITMAP hBMP = NULL;
+
+// cloud
+boolean cloudMain = false;
+float cloudX = 0.0, cloudY = 0.0, cloudZ = 0.0;
+float cloudSpeed = 0.01;
+
 
 
 LRESULT WINAPI WindowProcedure(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) {
@@ -71,11 +77,23 @@ LRESULT WINAPI WindowProcedure(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam
 		else if (wParam == 'E') {         // Rotate camera around Y-axis (clockwise)
 			cameraAngleY -= 1.0f;
 		}
+		else if (wParam == 'R') {		 // Rotate camera around Z-axis (counterclockwise)	
+			cameraAngleZ += 1.0f;
+		}
+		else if (wParam == 'T') {		 // Rotate camera around Z-axis (clockwise)
+			cameraAngleZ -= 1.0f;
+		}
 		else if (wParam == 'O') {         // Switch to Orthographic projection
 			isOrtho = true;
 		}
 		else if (wParam == 'P') {         // Switch to Perspective projection
 			isOrtho = false;
+		}
+		else if (wParam == 'C') {
+			cloudMain = true;
+			cloudX = 0;
+			cloudY = 0;
+			cloudZ = 0;
 		}
 		break;
 
@@ -149,8 +167,9 @@ void projection() {
 
 	glTranslatef(tx, ty, tz);
 
-	glRotatef(cameraAngleY, 0, 1, 0);
 	glRotatef(cameraAngleX, 1, 0, 0);
+	glRotatef(cameraAngleY, 0, 1, 0);
+	glRotatef(cameraAngleZ, 0, 0, 1);
 
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
@@ -618,7 +637,7 @@ void display()
 	glDeleteTextures(1, &textureArr[5]);
 	glPopMatrix();
 
-	// Left bridge back holder - black
+	// Left bridge back holder
 	glPushMatrix();
 	glTranslatef(0.45, 0.15, 0.02);
 	glRotatef(-45, 0.0, 0.0, 1.0);
@@ -627,7 +646,7 @@ void display()
 	glDeleteTextures(1, &textureArr[6]);
 	glPopMatrix();
 
-	// Left bridge front holder - black
+	// Left bridge front holder
 	glPushMatrix();
 	glTranslatef(0.45, 0.15, 0.18);
 	glRotatef(-45, 0.0, 0.0, 1.0);
@@ -636,7 +655,7 @@ void display()
 	glDeleteTextures(1, &textureArr[6]);
 	glPopMatrix();
 
-	// Right bridge back holder - black
+	// Right bridge back holder
 	glPushMatrix();
 	glTranslatef(-0.9, -0.29, 0.02);
 	glRotatef(45, 0.0, 0.0, 1.0);
@@ -654,10 +673,68 @@ void display()
 	glDeleteTextures(1, &textureArr[6]);
 	glPopMatrix();
 
+	//cloud controller
+	glPushMatrix();
+	if (cloudMain == true) {
+		if (cloudX > 2.5) {
+			cloudX = 35.1;
+		}
+		else {
+			cloudX = cloudX + cloudSpeed;
+		}
+	}
+	glTranslatef(cloudX, cloudY, cloudZ);
+
+	//reset cloud position
+	glPushMatrix();
+	glTranslatef(-1.2, 0.75, 0.0);
+
+	//center cloud
+	glPushMatrix();
+	textureArr[8] = loadTexture("cloud.bmp");
+	drawSphere(0.05, 30, 30);
+	glDeleteTextures(1, &textureArr[8]);
+	glPopMatrix();
+
+	//left bottom cloud
+	glPushMatrix();
+	glTranslatef(-0.07, 0.0, 0.0);
+	textureArr[7] = loadTexture("cloud.bmp");
+	drawSphere(0.05, 30, 30);
+	glDeleteTextures(1, &textureArr[8]);
+	glPopMatrix();
+
+	//right bottom cloud
+	glPushMatrix();
+	glTranslatef(0.07, 0.0, 0.0);
+	textureArr[7] = loadTexture("cloud.bmp");
+	drawSphere(0.05, 30, 30);
+	glDeleteTextures(1, &textureArr[8]);
+	glPopMatrix();
+
+	//left top cloud
+	glPushMatrix();
+	glTranslatef(0.035, 0.06, 0.0);
+	textureArr[7] = loadTexture("cloud.bmp");
+	drawSphere(0.05, 30, 30);
+	glDeleteTextures(1, &textureArr[8]);
+	glPopMatrix();
+
+	//right top cloud
+	glPushMatrix();
+	glTranslatef(-0.035, 0.06, 0.0);
+	textureArr[7] = loadTexture("cloud.bmp");
+	drawSphere(0.05, 30, 30);
+	glDeleteTextures(1, &textureArr[8]);
+	glPopMatrix();
+
+	glPopMatrix();
+	glPopMatrix();
+
 	// Left tower hole - white (same as tower for symmetry)
 	glPushMatrix();
 	glTranslatef(0.299, -0.3, 0.02);
-	textureArr[7] = loadTexture("tunnel.bmp");
+	textureArr[8] = loadTexture("tunnel.bmp");
 	drawCube2(0.202, 0.2, 0.16);
 	glDeleteTextures(1, &textureArr[7]);
 	glPopMatrix();
@@ -665,7 +742,7 @@ void display()
 	// Right tower hole - white (same as tower for symmetry)
 	glPushMatrix();
 	glTranslatef(-0.501, -0.3, 0.02);
-	textureArr[7] = loadTexture("tunnel.bmp");
+	textureArr[8] = loadTexture("tunnel.bmp");
 	drawCube2(0.202, 0.2, 0.16);
 	glDeleteTextures(1, &textureArr[7]);
 	glPopMatrix();
