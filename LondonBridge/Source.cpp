@@ -610,56 +610,64 @@ void display()
 
 	glPopMatrix();
 
+	//sea
+	glPushMatrix();
+	glTranslatef(-1.0, -1.0, -1.0);
+	textureArr[5] = loadTexture("sea.bmp");
+	drawCube(2.0, 0.5, 2.0);
+	glDeleteTextures(1, &textureArr[5]);
+	glPopMatrix();
+
 	// Left bridge back holder - black
 	glPushMatrix();
 	glTranslatef(0.45, 0.15, 0.02);
 	glRotatef(-45, 0.0, 0.0, 1.0);
-	textureArr[5] = loadTexture("steelbar.bmp");
+	textureArr[6] = loadTexture("steelbar.bmp");
 	drawCylinder(0.015, 0.015, 0.6, 20, 20);
-	glDeleteTextures(1, &textureArr[5]);
+	glDeleteTextures(1, &textureArr[6]);
 	glPopMatrix();
 
 	// Left bridge front holder - black
 	glPushMatrix();
 	glTranslatef(0.45, 0.15, 0.18);
 	glRotatef(-45, 0.0, 0.0, 1.0);
-	textureArr[5] = loadTexture("steelbar.bmp");
+	textureArr[6] = loadTexture("steelbar.bmp");
 	drawCylinder(0.015, 0.015, 0.6, 20, 20);
-	glDeleteTextures(1, &textureArr[5]);
+	glDeleteTextures(1, &textureArr[6]);
 	glPopMatrix();
 
 	// Right bridge back holder - black
 	glPushMatrix();
 	glTranslatef(-0.9, -0.29, 0.02);
 	glRotatef(45, 0.0, 0.0, 1.0);
-	textureArr[5] = loadTexture("steelbar.bmp");
+	textureArr[6] = loadTexture("steelbar.bmp");
 	drawCylinder(0.015, 0.015, 0.6, 20, 20);
-	glDeleteTextures(1, &textureArr[5]);
+	glDeleteTextures(1, &textureArr[6]);
 	glPopMatrix();
 
 	// Right bridge front holder - black
 	glPushMatrix();
 	glTranslatef(-0.9, -0.29, 0.18);
 	glRotatef(45, 0.0, 0.0, 1.0);
-	textureArr[5] = loadTexture("steelbar.bmp");
+	textureArr[6] = loadTexture("steelbar.bmp");
 	drawCylinder(0.015, 0.015, 0.6, 20, 20);
-	glDeleteTextures(1, &textureArr[5]);
+	glDeleteTextures(1, &textureArr[6]);
 	glPopMatrix();
 
 	// Left tower hole - white (same as tower for symmetry)
 	glPushMatrix();
 	glTranslatef(0.299, -0.3, 0.02);
-	textureArr[6] = loadTexture("tunnel.bmp");
+	textureArr[7] = loadTexture("tunnel.bmp");
 	drawCube2(0.202, 0.2, 0.16);
-	glDeleteTextures(1, &textureArr[6]);
+	glDeleteTextures(1, &textureArr[7]);
 	glPopMatrix();
 
 	// Right tower hole - white (same as tower for symmetry)
 	glPushMatrix();
 	glTranslatef(-0.501, -0.3, 0.02);
-	textureArr[6] = loadTexture("tunnel.bmp");
+	textureArr[7] = loadTexture("tunnel.bmp");
 	drawCube2(0.202, 0.2, 0.16);
-	glDeleteTextures(1, &textureArr[6]);
+	glDeleteTextures(1, &textureArr[7]);
 	glPopMatrix();
 }
 
